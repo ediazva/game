@@ -5,9 +5,9 @@ Usamos **2-spaces**, no tab.
 En los elementos de un `enum` usamos el estilo:
 ```c++
 enum MyEnum {
-  kValue1_Enum,
-  kValue2_Enum,
-  kValue3_Enum,
+  kValue1_MyEnum,
+  kValue2_MyEnum,
+  kValue3_MyEnum,
 }
 ```
 
