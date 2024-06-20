@@ -17,6 +17,7 @@ function(find_test_files)
     list(SUBLIST test_list 0 ${test_list_length} test_list)
     list(TRANSFORM test_list APPEND "-lib")
     target_link_libraries(${test_filename} ${test_list})
+    target_include_directories(${test_filename} PUBLIC "${PROJECT_SOURCE_DIR}/src")
 
     message(STATUS "Añadiendo la prueba: ${test_filename} con las librerias ${test_list}")
   endforeach()
