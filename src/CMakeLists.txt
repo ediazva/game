@@ -1,6 +1,14 @@
 include(FindLibSFML)
 
-add_library(engine-lib
+include_directories(${PROJECT_SOURCE_DIR}/src)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set(GAME_FLAGS -DGAME_DEBUG)
+endif()
+
+# ===============
+# engine-lib
+# ===============
+add_library(engine-lib STATIC
   engine/engine.cc)
-target_include_directories(engine-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(engine-lib sfml-system)
+target_link_libraries(engine-lib sfml-system sfml-graphics)
+target_compile_definitions(engine-lib PUBLIC ${GAME_FLAGS})
