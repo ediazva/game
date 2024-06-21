@@ -2,39 +2,42 @@
 
 #include "engine/gameobject.h"
 
-#include <SFML/Window/Event.hpp>
+#include <raylib.h>
 
 namespace engine {
-  Engine::Engine(const char* title, unsigned w, unsigned h, bool vsync) :
-    m_window{{w,h}, title, sf::Style::Close} {
-    m_window.setVerticalSyncEnabled(vsync);
+  Engine::Engine(const char* title, unsigned w, unsigned h, int fps) {
+    InitWindow(w, h, title);
+    if(fps > 0)
+      SetTargetFPS(fps);
   }
-  Engine::~Engine() {}
+  Engine::~Engine() {
+    CloseWindow();
+  }
   
   void Engine::run() {
-    for(sf::Clock clk; m_window.isOpen(); m_window.display()) {
-      const auto deltatime = clk.restart().asSeconds();
-    
+    while(!WindowShouldClose()) {
       processInput();
-      update(deltatime);
+      update(GetFrameTime());
       render();
     }
   }
 
   void Engine::processInput() {
-    for(sf::Event ev; m_window.pollEvent(ev);) {
-      switch(ev.type) {
-        using enum sf::Event::EventType;
-        case Closed: m_window.close(); break;
-      }
-    }
+    PollInputEvents();
+
+    onProcessInput();
   }
 
   void Engine::update(const float& deltatime) {
+    onUpdate(deltatime);
+
     for(auto& obj : m_objects)
       obj->update(deltatime);
   }
 
   void Engine::render() {
+    BeginDrawing();
+    onRender();
+    EndDrawing();
   }
 } // namespace engine 
