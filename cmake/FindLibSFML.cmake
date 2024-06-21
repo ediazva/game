@@ -1,1 +1,0 @@
-find_package(SFML COMPONENTS system graphics REQUIRED)

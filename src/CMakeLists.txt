@@ -1,4 +1,4 @@
-include(FindLibSFML)
+include(FindRaylib)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -10,5 +10,5 @@ endif()
 # ===============
 add_library(engine-lib STATIC
   engine/engine.cc)
-target_link_libraries(engine-lib sfml-system sfml-graphics)
+target_link_libraries(engine-lib raylib)
 target_compile_definitions(engine-lib PUBLIC ${GAME_FLAGS})
