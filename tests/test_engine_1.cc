@@ -10,7 +10,7 @@ class GameEngine : public Engine {
 public:
   using Engine::Engine;
 
-  engine::Result onInit() override {
+  Result onInit() override {
     tex = gfx::Texture::LoadFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png");
 
     return kSucess_Result;
@@ -20,8 +20,9 @@ public:
   }
 
   void onRender() override {
-    // DrawTexture(tex, 0, 0, WHITE);
-    
+    using namespace raylib;
+    ClearBackground(RED);
+    DrawTexture(tex.base, 0, 0, WHITE);
   }
 };
 

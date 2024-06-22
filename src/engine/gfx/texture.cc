@@ -2,13 +2,14 @@
 
 namespace engine::gfx {
   Texture::~Texture() {
-    raylib::UnloadTexture(*this);
+    raylib::UnloadTexture(base);
   }
 
   Texture Texture::LoadFromPath(const char* path, Result* res) {
-    Texture tex = (Texture)raylib::LoadTexture(path);
+    Texture tex;
+    tex.base = raylib::LoadTexture(path);
     if(res)
-      *res = tex.id ? kSucess_Result : kFileNotFound_Error;
+      *res = tex.base.id ? kSucess_Result : kFileNotFound_Error;
     return tex;
   }
 } // namespace engine::gfx
