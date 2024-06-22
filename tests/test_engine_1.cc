@@ -21,8 +21,12 @@ public:
 
   void onRender() override {
     using namespace raylib;
-    ClearBackground(RED);
-    DrawTexture(tex.base, 0, 0, WHITE);
+    DrawTexture(tex, 0, 0, WHITE);
+    for(int y = 0; y*16 < tex.height; ++y) {
+      for(int x = 0; x*16 < tex.width; ++x) {
+        DrawRectangleLines(16*x, 16*y, 16, 16, GREEN);
+      }
+    }
   }
 };
 
