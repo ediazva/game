@@ -5,7 +5,7 @@ namespace engine::gfx {
     raylib::UnloadTexture(*this);
   }
 
-  Texture Texture::LoadFromPath(const char* path, Result* res) {
+  Texture Texture::MakeFromPath(const char* path, Result* res) {
     Texture tex;
     tex.copy_base(raylib::LoadTexture(path));
     if(res)
