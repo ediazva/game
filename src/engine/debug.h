@@ -5,8 +5,8 @@ namespace engine {
 } // namespace engine
 
 #ifdef GAME_DEBUG
-#  include <raylib.h>
-#  define LOG_TRACE(...) TraceLog(LOG_TRACE, _VA_ARGS_)
+#  include "engine/raylib.h"
+#  define DEBUG_TRACE(...) raylib::TraceLog(raylib::LOG_TRACE, __VA_ARGS__)
 #else
-#  define LOG_TRACE(...)
+#  define DEBUG_TRACE(...)
 #endif
