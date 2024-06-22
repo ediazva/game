@@ -1,4 +1,5 @@
 include(FindRaylib)
+include(CopyResources)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -9,6 +10,9 @@ endif()
 # engine-lib
 # ===============
 add_library(engine-lib STATIC
-  engine/engine.cc)
+  engine/engine.cc
+  engine/debug.cc
+  engine/tile.cc
+  engine/gfx/texture.cc)
 target_link_libraries(engine-lib raylib)
 target_compile_definitions(engine-lib PUBLIC ${GAME_FLAGS})
