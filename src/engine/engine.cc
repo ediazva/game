@@ -1,29 +1,33 @@
 #include "engine/engine.h"
 
 #include "engine/gameobject.h"
-
-#include <raylib.h>
+#include "engine/raylib.h"
 
 namespace engine {
   Engine::Engine(const char* title, unsigned w, unsigned h, int fps) {
-    InitWindow(w, h, title);
+    raylib::InitWindow(w, h, title);
     if(fps > 0)
-      SetTargetFPS(fps);
+      raylib::SetTargetFPS(fps);
   }
   Engine::~Engine() {
-    CloseWindow();
+    raylib::CloseWindow();
   }
   
-  void Engine::run() {
-    while(!WindowShouldClose()) {
+  Result Engine::run() {
+    if(Result res = onInit(); res != kSucess_Result)
+      return res;
+    
+    while(!raylib::WindowShouldClose()) {
       processInput();
-      update(GetFrameTime());
+      update(raylib::GetFrameTime());
       render();
     }
+
+    return kSucess_Result;
   }
 
   void Engine::processInput() {
-    PollInputEvents();
+    raylib::PollInputEvents();
 
     onProcessInput();
   }
@@ -36,8 +40,8 @@ namespace engine {
   }
 
   void Engine::render() {
-    BeginDrawing();
+    raylib::BeginDrawing();
     onRender();
-    EndDrawing();
+    raylib::EndDrawing();
   }
 } // namespace engine 

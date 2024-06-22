@@ -1,4 +1,6 @@
 #pragma once
+#include "engine/result.h"
+
 #include <vector>
 #include <memory>
 
@@ -8,8 +10,9 @@ namespace engine {
     Engine(const char* title, unsigned w, unsigned h, int fps = -1);
     ~Engine();
 
-    void run();
+    Result run();
   protected:
+    virtual Result onInit() {return kSucess_Result;}
     virtual void onProcessInput() {}
     virtual void onUpdate(const float& deltatime) {}
     virtual void onRender() {}
