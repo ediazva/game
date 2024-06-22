@@ -1,18 +1,33 @@
 #include "engine/engine.h"
 
-#include <raylib.h>
+#include "engine/debug.h"
+#include "engine/gfx/texture.h"
 
-class GameEngine : public engine::Engine {
+using namespace engine;
+
+class GameEngine : public Engine {
+  gfx::Texture tex;
 public:
   using Engine::Engine;
 
+  engine::Result onInit() override {
+    tex = gfx::Texture::LoadFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png");
+
+    return kSucess_Result;
+  }
+
+  void onUpdate(const float& deltatime) override {
+  }
+
   void onRender() override {
+    // DrawTexture(tex, 0, 0, WHITE);
+    
   }
 };
 
 int main() {
+  configure_raylib_log();
   GameEngine eng("Django: Sin palomas", 800, 400, 60);
-  eng.run();
-
-  return 0;
+  
+  return eng.run();
 }
