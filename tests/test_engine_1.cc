@@ -1,17 +1,19 @@
 #include "engine/engine.h"
 
 #include "engine/debug.h"
-#include "engine/gfx/texture.h"
+#include "engine/gfx/tile.h"
 
 using namespace engine;
 
 class GameEngine : public Engine {
-  gfx::Texture tex;
+  gfx::Tile tile;
 public:
   using Engine::Engine;
 
   Result onInit() override {
-    tex = gfx::Texture::LoadFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png");
+    tile = gfx::Tile::MakeFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png");
+    // tile.tileSize.w = 16;
+    // tile.tileSize.h = 16;
 
     return kSucess_Result;
   }
@@ -20,13 +22,7 @@ public:
   }
 
   void onRender() override {
-    using namespace raylib;
-    DrawTexture(tex, 0, 0, WHITE);
-    for(int y = 0; y*16 < tex.height; ++y) {
-      for(int x = 0; x*16 < tex.width; ++x) {
-        DrawRectangleLines(16*x, 16*y, 16, 16, GREEN);
-      }
-    }
+    tile.draw();
   }
 };
 
