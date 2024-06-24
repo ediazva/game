@@ -1,5 +1,10 @@
 #pragma once
 
+namespace engine {
+  class Engine;
+} // namespace engine
+
+/// Se necesita que se defina un destructor
 #define BEGIN_RAYLIB_WRAPPER(classname, type)         \
   struct classname : type {                           \
     classname() = default;                            \
@@ -8,7 +13,6 @@
       o.copy_base({});                                \
     }                                                 \
     classname(const classname&) = delete;             \
-    ~classname();                                     \
                                                       \
     classname& operator=(const classname&) = delete;  \
     classname& operator=(classname&& o) {             \
@@ -20,5 +24,6 @@
     void copy_base(const type& base) {                \
       type::operator=(base);                          \
     }                                                 \
+    friend class engine::Engine;                              \
   public:
 #define END_RAYLIB_WRAPPER };

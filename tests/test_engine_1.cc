@@ -1,16 +1,17 @@
 #include "engine/engine.h"
 
 #include "engine/debug.h"
-#include "engine/assets/tile.h"
+#include "engine/assets/texture.h"
 
 using namespace engine;
 
 class GameEngine : public Engine {
-  assets::Tile tile;
+  assets::Texture tex;
 public:
   using Engine::Engine;
 
   Result onInit() override {
+    // tex = makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png");
     // assets::TileInfo info;
     // info.tileSize.w = 16;
     // info.tileSize.h = 16;
@@ -25,6 +26,7 @@ public:
   }
 
   void onRender() override {
+    raylib::DrawTexture(tex, 0, 0, raylib::WHITE);
     // raylib::DrawTile(tile);
   }
 };

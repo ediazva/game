@@ -5,11 +5,26 @@
 #include <memory>
 
 namespace engine {
+  namespace assets {
+    struct Sound;
+    struct Texture;
+  } // namespace assets
+
   class Engine {
   public:
     Engine(const char* title, unsigned w, unsigned h, int fps = -1);
     ~Engine();
 
+    // ================
+    // ASSETS CREATION
+    // ================
+    assets::Sound makeSoundFromPath(const char* path, Result* res = nullptr);
+    assets::Texture makeTextureFromPath(const char* path, Result* res = nullptr);
+    // assets::Tile makeSoundFromPath(const char* path, Result* res = nullptr);
+
+    // ================
+    // MAIN FUNCTIONS
+    // ================
     Result run();
   protected:
     virtual Result onInit() {return kSucess_Result;}
