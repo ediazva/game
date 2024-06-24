@@ -1,8 +1,8 @@
 #pragma once
 #include "engine/result.h"
-#include "engine/gfx/texture.h"
+#include "engine/assets/texture.h"
 
-namespace engine::gfx {
+namespace engine::assets {
   struct TileInfo {
     struct {
       unsigned w;
@@ -19,8 +19,6 @@ namespace engine::gfx {
     Texture m_tex;
     TileInfo m_info;
   public:
-    void draw();
-
     static Tile MakeFromPath(const char* path, const TileInfo& info, Result* res = nullptr);
   };
-} // namespace engine::gfx
+} // namespace engine::assets

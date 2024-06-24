@@ -1,6 +1,6 @@
-#include "engine/gfx/texture.h"
+#include "engine/assets/texture.h"
 
-namespace engine::gfx {
+namespace engine::assets {
   Texture::~Texture() {
     raylib::UnloadTexture(*this);
   }
@@ -12,4 +12,4 @@ namespace engine::gfx {
       *res = tex.id ? kSucess_Result : kFileNotFound_Error;
     return tex;
   }
-} // namespace engine::gfx
+} // namespace engine::assets
