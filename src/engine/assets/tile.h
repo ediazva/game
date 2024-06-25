@@ -18,7 +18,5 @@ namespace engine::assets {
   class Tile {
     Texture m_tex;
     TileInfo m_info;
-  public:
-    static Tile MakeFromPath(const char* path, const TileInfo& info, Result* res = nullptr);
   };
 } // namespace engine::assets
