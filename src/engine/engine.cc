@@ -10,8 +10,10 @@ namespace engine {
     raylib::InitWindow(w, h, title);
     if(fps > 0)
       raylib::SetTargetFPS(fps);
+    raylib::InitAudioDevice();
   }
   Engine::~Engine() {
+    raylib::CloseAudioDevice();
     raylib::CloseWindow();
   }
 
@@ -21,7 +23,8 @@ namespace engine {
   assets::Sound Engine::makeSoundFromPath(const char* path, Result* res) {
     assets::Sound snd;
     snd.copy_base(raylib::LoadSound(path));
-    // FIXME: Indicar error!!!
+    if(res)
+      *res = snd.stream.buffer ? kSucess_Result : kFileNotFound_Result;
     return snd;
   }
 
@@ -29,7 +32,7 @@ namespace engine {
     assets::Texture tex;
     tex.copy_base(raylib::LoadTexture(path));
     if(res)
-      *res = tex.id ? kSucess_Result : kFileNotFound_Error;
+      *res = tex.id ? kSucess_Result : kFileNotFound_Result;
     return tex;
   }
 
