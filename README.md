@@ -29,7 +29,7 @@ ninja
 ```
 
 ## Testing
-Para crear ejecutables que prueban alguna parte del proyecto se deben agregar archivos `.cc` en la carpeta [test](/tests/) con el formato `test_<lib>*_<name>.cc`. e.g:
+Para crear ejecutables que prueben alguna parte del proyecto se deben agregar archivos `.cc` en la carpeta [tests](/tests/) con el formato `test_<lib>*_<name>.cc`. e.g:
 ```
 test_engine_1.cc    →   Agregar un ejecutable que importa la librería engine
 
