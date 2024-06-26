@@ -20,7 +20,7 @@ raylib-win/
 ├─ CHANGELOG
 ├─ LICENSE
 ```
-Se deberá agregar ese directorio al proyecto estableciendo la variable`RAYLIB_DIR` ya sea por `cmake-gui` o mediante el argumento `-DRAYLIB_DIR=<dir>`.
+Se deberá agregar ese directorio al proyecto estableciendo la variable `RAYLIB_DIR` ya sea por `cmake-gui` o mediante el argumento `-DRAYLIB_DIR=<dir>`.
 ```sh
 cmake -G Ninja \
   -DRAYLIB_DIR=/raylib-win
