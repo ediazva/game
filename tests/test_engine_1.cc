@@ -1,24 +1,25 @@
 #include "engine/engine.h"
 
 #include "engine/debug.h"
-#include "engine/assets/texture.h"
-#include "engine/assets/sound.h"
+#include "engine/assets/tile.h"
 
 using namespace engine;
 
 class GameEngine : public Engine {
-  assets::Sound snd;
+  assets::Tile tile;
 public:
   using Engine::Engine;
 
   Result onInit() override {
-    // tex = makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png");
-    // assets::TileInfo info;
-    // info.tileSize.w = 16;  
-    // info.tileSize.h = 16;
-    // tile = assets::Tile::MakeFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png", info);
-    // tile.tileSize.w = 16;
-    // tile.tileSize.h = 16;
+    tile.tex = makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png");
+    tile.info.size = {16.f, 16.f};
+    tile.map = {
+      {19, 1, 2},
+      {19, 1, 2},
+      {19, 1, 2},
+      {19, 1, 2},
+      {19, 1, 2},
+    };
 
     return kSucess_Result;
   }
@@ -26,15 +27,17 @@ public:
   void onUpdate(const float& deltatime) override {
   }
 
+
   void onRender() override {
-    // raylib::DrawTexture(tex, 0, 0, raylib::WHITE);
-    // raylib::DrawTile(tile);
+    using namespace raylib;
+    ClearBackground(BLANK);
+    DrawTile(tile, {100.f,10.f});
   }
 };
 
 int main() {
   configure_raylib_log();
-  GameEngine eng("Django: Sin palomas", 800, 400, 60);
+  GameEngine eng("Django: Sin palomas", 800, 400);
   
   return eng.run();
 }

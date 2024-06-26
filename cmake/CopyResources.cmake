@@ -1,0 +1,1 @@
+set(RESOURCES_DIR "${PROJECT_SOURCE_DIR}/data")

@@ -36,6 +36,10 @@ namespace engine {
     return tex;
   }
 
+  // assets::Tile Engine::makeTileFromPath(const char* path, Result* res) {
+    // assets::Tile tile;
+  // }
+
   // ======================================================================
 
   // ================

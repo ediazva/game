@@ -8,6 +8,7 @@ namespace engine {
   namespace assets {
     struct Sound;
     struct Texture;
+    struct Tile;
   } // namespace assets
 
   class Engine {
@@ -20,7 +21,7 @@ namespace engine {
     // ================
     assets::Sound makeSoundFromPath(const char* path, Result* res = nullptr);
     assets::Texture makeTextureFromPath(const char* path, Result* res = nullptr);
-    // assets::Tile makeSoundFromPath(const char* path, Result* res = nullptr);
+    // assets::Tile makeTileFromPath(const char* path, Result* res = nullptr);
 
     // ================
     // MAIN FUNCTIONS
