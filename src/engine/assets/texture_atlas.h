@@ -1,0 +1,29 @@
+#pragma once
+#include "engine/assets/texture.h"
+
+#include <vector>
+
+namespace engine::assets {
+  class TextureAtlas {
+  public:
+    struct Info {
+      struct {
+        unsigned w;
+        unsigned h;
+      } size;
+      float scale{1.f};
+    };
+
+    void makeFromTexture(Texture&& tex, const Info& info);
+    const Texture& texture() const {return m_tex;}
+    const Info& info() const {return m_info;}
+
+    const raylib::Vector2& rectOrigin(unsigned idx) const {return m_rects.at(idx);}
+  private:
+    Texture m_tex{};
+    Info m_info{};
+    std::vector<raylib::Vector2> m_rects;
+
+    void initRects();
+  };
+} // namespace engine::assets

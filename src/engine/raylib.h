@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-
 namespace engine::assets {
   struct Tile;
 } // namespace engine::assets

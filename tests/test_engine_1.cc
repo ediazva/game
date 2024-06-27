@@ -11,14 +11,13 @@ public:
   using Engine::Engine;
 
   Result onInit() override {
-    tile.tex = makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png");
-    tile.info.size = {16.f, 16.f};
+    tile.atlas.makeFromTexture(
+      makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet2.png"),
+      {
+        .size = {137, 137},
+      });
     tile.map = {
-      {19, 1, 2},
-      {19, 1, 2},
-      {19, 1, 2},
-      {19, 1, 2},
-      {19, 1, 2},
+      {0},
     };
 
     return kSucess_Result;
@@ -31,7 +30,7 @@ public:
   void onRender() override {
     using namespace raylib;
     ClearBackground(BLANK);
-    DrawTile(tile, {100.f,10.f});
+    DrawTile(tile, {100.f,0});
   }
 };
 

@@ -4,21 +4,31 @@
 
 namespace raylib {
   void DrawTile(const engine::assets::Tile& t, const Vector2& origin) {
-    const auto& size = t.info.size;
-    const auto& map = t.map;
-
-    for(size_t i = 0; i < map.size(); ++i) {
-      for(size_t j = 0; j < map[i].size(); ++j) {
-        const auto og = t.getTileOrigin(map[i][j]);
-        DrawTextureRec(t.tex,
-          {og.first,
-           og.second,
-           size.w,
-           size.h},
-          {origin.x + j*size.w,
-           origin.y + i*size.h}, WHITE);
+    const auto& size = t.atlas.info().size;
+    const auto& scale = t.atlas.info().scale;
+    for(const auto& a : t.map) {
+      for(const auto& b : a) {
+        const auto& og = t.atlas.rectOrigin(b);
+        const auto scaledWidth = size.w*scale;
+        const auto scaledHeight = size.h*scale;
+        DrawTexturePro(
+          t.atlas.texture(),
+          {
+            og.x,
+            og.y,
+            static_cast<float>(size.w),
+            static_cast<float>(size.h)
+          },
+          {
+            origin.x + og.x,
+            origin.y + og.y,
+            scaledWidth,
+            scaledHeight
+          },
+          {},
+          0.f,
+          WHITE);
       }
     }
-    // DrawTexture(t.m_tex, 0, 0, WHITE);
   }
 } // namespace raylib

@@ -12,6 +12,7 @@ endif()
 add_library(engine-lib STATIC
   engine/engine.cc
   engine/raylib.cc
-  engine/debug.cc)
+  engine/debug.cc
+  engine/assets/texture_atlas.cc)
 target_link_libraries(engine-lib raylib)
 target_compile_definitions(engine-lib PUBLIC ${GAME_FLAGS})
