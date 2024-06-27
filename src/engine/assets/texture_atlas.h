@@ -19,6 +19,7 @@ namespace engine::assets {
 
     const Texture& texture() const {return m_tex;}
     const Info& info() const {return m_info;}
+    size_t nrects() const {return m_rects.size();}
 
     const raylib::Vector2& rectOrigin(unsigned idx) const {return m_rects.at(idx);}
   private:
