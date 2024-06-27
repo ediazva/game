@@ -28,7 +28,7 @@ public:
       { 19, 1, 2 },
       { 19, 1, 2 },
     };
-
+    
     return kSucess_Result;
   }
 
