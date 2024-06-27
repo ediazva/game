@@ -12,12 +12,17 @@ public:
 
   Result onInit() override {
     tile.atlas.makeFromTexture(
-      makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet2.png"),
+      makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
       {
-        .size = {137, 137},
+        .size = {16, 16},
+        .scale = 5.f
       });
     tile.map = {
-      {0},
+      {-1, 0, -1},
+      {-1, 0, -1},
+      {-1, 0, -1},
+      {-1, 0, -1},
+      {0,  0,  0},
     };
 
     return kSucess_Result;
@@ -30,7 +35,8 @@ public:
   void onRender() override {
     using namespace raylib;
     ClearBackground(BLANK);
-    DrawTile(tile, {100.f,0});
+    DrawTexture(tile.atlas.texture(), 0, 0, WHITE);
+    DrawTile(tile, {400.f,0});
   }
 };
 

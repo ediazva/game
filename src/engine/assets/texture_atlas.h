@@ -15,6 +15,8 @@ namespace engine::assets {
     };
 
     void makeFromTexture(Texture&& tex, const Info& info);
+    void setScale(float scale);
+
     const Texture& texture() const {return m_tex;}
     const Info& info() const {return m_info;}
 
@@ -25,5 +27,6 @@ namespace engine::assets {
     std::vector<raylib::Vector2> m_rects;
 
     void initRects();
+    void initInfo(const Info& info);
   };
 } // namespace engine::assets

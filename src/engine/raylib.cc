@@ -6,9 +6,11 @@ namespace raylib {
   void DrawTile(const engine::assets::Tile& t, const Vector2& origin) {
     const auto& size = t.atlas.info().size;
     const auto& scale = t.atlas.info().scale;
-    for(const auto& a : t.map) {
-      for(const auto& b : a) {
-        const auto& og = t.atlas.rectOrigin(b);
+    const auto& map = t.map;
+    for(size_t i = 0; i < map.size(); ++i) {
+      for(size_t j = 0; j < map[i].size(); ++j) {
+        if(map[i][j] < 0) continue;
+        const auto& og = t.atlas.rectOrigin(map[i][j]);
         const auto scaledWidth = size.w*scale;
         const auto scaledHeight = size.h*scale;
         DrawTexturePro(
@@ -20,8 +22,8 @@ namespace raylib {
             static_cast<float>(size.h)
           },
           {
-            origin.x + og.x,
-            origin.y + og.y,
+            origin.x + j*scaledWidth,
+            origin.y + i*scaledHeight,
             scaledWidth,
             scaledHeight
           },
