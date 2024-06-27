@@ -11,6 +11,7 @@ endif()
 # ===============
 add_library(engine-lib STATIC
   engine/engine.cc
+  engine/timer_manager.cc
   engine/raylib.cc
   engine/debug.cc
   componentes/genericos.h
