@@ -1,2 +1,6 @@
 /.cache
 /build
+/out
+/raylib
+compile_commands.json
+.clang-format

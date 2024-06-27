@@ -7,4 +7,4 @@ namespace engine {
 
     virtual void* update(const float& deltatime) = 0;
   };
-} // namespace engine 
+} // namespace engine

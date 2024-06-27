@@ -28,7 +28,7 @@ namespace engine {
     // ================
     Result run();
   protected:
-    virtual Result onInit() {return kSucess_Result;}
+    virtual Result onInit() { return kSucess_Result; }
     virtual void onProcessInput() {}
     virtual void onUpdate(const float& deltatime) {}
     virtual void onRender() {}

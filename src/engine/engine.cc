@@ -4,6 +4,9 @@
 #include "engine/raylib.h"
 #include "engine/assets/sound.h"
 #include "engine/assets/texture.h"
+#include "componentes/genericos.h"
+#include "sistemas/movimiento.h"
+#include "sistemas/visualizar.h"
 
 namespace engine {
   Engine::Engine(const char* title, unsigned w, unsigned h, int fps) {
@@ -37,7 +40,7 @@ namespace engine {
   }
 
   // assets::Tile Engine::makeTileFromPath(const char* path, Result* res) {
-    // assets::Tile tile;
+  // assets::Tile tile;
   // }
 
   // ======================================================================
@@ -48,7 +51,7 @@ namespace engine {
   Result Engine::run() {
     if(Result res = onInit(); res != kSucess_Result)
       return res;
-    
+
     while(!raylib::WindowShouldClose()) {
       processInput();
       update(raylib::GetFrameTime());
@@ -74,6 +77,7 @@ namespace engine {
   void Engine::render() {
     raylib::BeginDrawing();
     onRender();
+
     raylib::EndDrawing();
   }
-} // namespace engine 
+} // namespace engine
