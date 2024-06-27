@@ -3,6 +3,6 @@
 namespace engine {
   enum Result {
     kSucess_Result = 0,
-    kFileNotFound_Result,
+    kResourceNotLoaded_Result,
   };
 } // namespace engine

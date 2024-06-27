@@ -24,7 +24,7 @@ namespace engine {
     assets::Sound snd;
     snd.copy_base(raylib::LoadSound(path));
     if(res)
-      *res = snd.stream.buffer ? kSucess_Result : kFileNotFound_Result;
+      *res = raylib::IsSoundReady(snd) ? kSucess_Result : kResourceNotLoaded_Result;
     return snd;
   }
 
@@ -32,7 +32,7 @@ namespace engine {
     assets::Texture tex;
     tex.copy_base(raylib::LoadTexture(path));
     if(res)
-      *res = tex.id ? kSucess_Result : kFileNotFound_Result;
+      *res = raylib::IsTextureReady(tex) ? kSucess_Result : kResourceNotLoaded_Result;
     return tex;
   }
 
