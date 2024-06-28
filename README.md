@@ -46,3 +46,24 @@ test_engine_base_os_1.cc    →    Agregar un ejecutable que importa las librer�
 - [ ] Fisicas?
 - [ ] Entidades (GameObject?)
 - [ ] Observador
+
+Sprites:
+ - JSON contiene datos del sprite
+ - sprite.png
+ - Animaciones
+ - Mediante Aseprite o algún programa
+HitBox (colisiones):
+ - Se crea un rectangulo (forma) que indique la colisión (colisión entre rectangulos)
+ 
+ GameObject:
+  - Components (Componentes):
+    - HitBox
+    - Sprite
+    
+Crear Tile generico para Sprites????
+Crer un TextureRect que nos permite dividir una Textura en rectangulos y poder hacer referencia a uno de ellos
+
+
+Entity -> Contiene Componentes
+Pool -> Contiene la lista de todas las Entidades y podemos obtener todos las entidades que contienen un Componente
+SystemManager -> Manejar las entidades
