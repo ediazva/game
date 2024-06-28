@@ -1,9 +1,5 @@
 #include "engine/engine.h"
 
-#include "engine/assets/tile.h"
-#include "engine/debug.h"
-#include "engine/gameobject.h"
-// #include "raylib.h"
 #include "componentes/genericos.h"
 #include "manager/entmanager.h"
 
@@ -13,31 +9,20 @@
 using namespace engine;
 
 class GameEngine : public Engine {
-  assets::Tile tile;
-
 public:
   using Engine::Engine;
 
   Result onInit() override {
-    tile.tex = makeTextureFromPath("data/img/sheet.png");
-    tile.info.size = { 16.f, 16.f };
-    tile.map = {
-      { 19, 1, 2 },
-      { 19, 1, 2 },
-      { 19, 1, 2 },
-      { 19, 1, 2 },
-      { 19, 1, 2 },
-    };
-    
     return kSucess_Result;
   }
 
-  void onUpdate(const float& deltatime) override {}
+  void onUpdate(const float& deltatime) override {
+
+  }
 
   void onRender() override {
     using namespace raylib;
     ClearBackground(BLANK);
-    DrawTile(tile, { 100.f, 10.f });
   }
 };
 
@@ -61,6 +46,24 @@ int main() {
   std::bitset<10> cmp;
   cmp.set(SPRITE, true);
   cmp.set(POSICION, true);
+  /*
+  typedef enum {
+    0001
+    0010
+    0100
+    1000
+
+    SPRITE = 1 << 0,
+    HITBOX = 1 << 1,
+    POSICION = 1 << 2,
+    VELOCIDADAI = 1 << 3,
+    INPUT = 1 << 4,
+    DISPARAR = 1 << 5,
+  } COMPONENTE = 1 << 6;
+  if(cmp & SPRITE) 
+  auto get_entidades(unsigned flags);
+  get_entidades(SPRITE | HITBOX);
+  */
   auto conj = manager.get_entidades(cmp);
   for(auto& e : conj) {
     std::cout << e->comp_bitset << std::endl;

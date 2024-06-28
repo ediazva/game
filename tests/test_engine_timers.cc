@@ -3,14 +3,21 @@
 #include "engine/debug.h"
 using namespace engine;
 
+int attemps = 0;
 class GameEngine : public Engine {
 public:
   using Engine::Engine;
 
   virtual Result onInit() override {
     TimerManager::AddTimer(5.f) = [](){
-      DEBUG_TRACE("Aparece Dina Boluarte");
-      return true;
+      DEBUG_TRACE("Timer 5 segundos");
+      return kContinue_TimerResult;
+    };
+    TimerManager::AddTimer(2.f) = []() {
+      DEBUG_TRACE("Timer 2 segundos");
+      if(attemps++ == 3)
+        return kStop_TimerResult;
+      return kContinue_TimerResult;
     };
     
     return kSucess_Result;

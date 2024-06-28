@@ -17,7 +17,7 @@ public:
       makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
       {
         .size = {16,16},
-        .scale = 4.f
+        .scale = 16.f
       });
 
     return kSucess_Result;
@@ -48,7 +48,7 @@ public:
 
 int main() {
   configure_raylib_log();
-  GameEngine eng("Django: Sin palomas", 800, 400);
+  GameEngine eng("Django: Sin palomas", 800, 400, 60);
   
   return eng.run();
 }
