@@ -4,9 +4,9 @@
 #include "engine/raylib.h"
 #include "engine/assets/sound.h"
 #include "engine/assets/texture.h"
-#include "componentes/genericos.h"
-#include "sistemas/movimiento.h"
-#include "sistemas/visualizar.h"
+// #include "componentes/genericos.h"
+// #include "sistemas/movimiento.h"
+// #include "sistemas/visualizar.h"
 
 namespace engine {
   Engine::Engine(const char* title, unsigned w, unsigned h, int fps) {
@@ -70,8 +70,8 @@ namespace engine {
   void Engine::update(const float& deltatime) {
     onUpdate(deltatime);
 
-    for(auto& obj : m_objects)
-      obj->update(deltatime);
+    // for(auto& obj : m_objects)
+      // obj->update(deltatime);
   }
 
   void Engine::render() {
