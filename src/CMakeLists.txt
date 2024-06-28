@@ -14,7 +14,7 @@ add_library(engine-lib STATIC
   engine/timer_manager.cc
   engine/raylib.cc
   engine/debug.cc
-  componentes/genericos.h
+  # componentes/genericos.h
   engine/assets/texture_atlas.cc
 )
 target_link_libraries(engine-lib raylib)
