@@ -1,22 +1,27 @@
 #include "engine/engine.h"
 
+#include "engine/debug.h"
 #include "engine/raylib.h"
+#include "engine/entity_manager.h"
+#include "engine/system_manager.h"
 #include "engine/assets/sound.h"
 #include "engine/assets/texture.h"
 
 namespace engine {
   Engine::Engine(const char* title, unsigned w, unsigned h, int fps) :
-    m_entmgr{},
-    m_sysmgr{} {
+    m_entmgr{new EntityManager},
+    m_sysmgr{new SystemManager} {
     raylib::InitWindow(w, h, title);
     if(fps > 0)
       raylib::SetTargetFPS(fps);
     raylib::InitAudioDevice();
 
     configure_raylib_log();
-    m_sysmgr.setDepedencies(&m_entmgr);
+    m_sysmgr->setDepedencies(m_entmgr);
   }
   Engine::~Engine() {
+    delete m_entmgr;
+    delete m_sysmgr;
     raylib::CloseAudioDevice();
     raylib::CloseWindow();
   }
@@ -45,9 +50,17 @@ namespace engine {
   // ================
   // MAIN FUNCTIONS
   // ================
+  SystemManager& Engine::systemManager() {
+    return *m_sysmgr;
+  }
+
+  EntityManager& Engine::entityManager() {
+    return *m_entmgr;
+  }
+
   void Engine::run() {
     onInit();
-    m_sysmgr.init();
+    m_sysmgr->init();
 
     while(!raylib::WindowShouldClose()) {
       processInput();
@@ -65,13 +78,13 @@ namespace engine {
   void Engine::update(const float& deltatime) {
     onUpdate(deltatime);
 
-    m_sysmgr.update(deltatime);
+    m_sysmgr->update(deltatime);
   }
 
   void Engine::render() {
     raylib::BeginDrawing();
     onRender();
-    m_sysmgr.render();
+    m_sysmgr->render();
 
     raylib::EndDrawing();
   }

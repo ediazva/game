@@ -1,8 +1,9 @@
 #pragma once
-#include "engine/entity_manager.h"
-#include "engine/system_manager.h"
 
 namespace engine {
+  class SystemManager;
+  class EntityManager;
+
   namespace assets {
     struct Sound;
     struct Texture;
@@ -26,8 +27,8 @@ namespace engine {
     // ================
     void run();
   protected:
-    SystemManager& systemManager() {return m_sysmgr;}
-    EntityManager& entityManager() {return m_entmgr;}
+    SystemManager& systemManager();
+    EntityManager& entityManager();
     virtual void onInit() {}
     virtual void onProcessInput() {}
     virtual void onUpdate(const float& deltatime) {}
@@ -37,7 +38,7 @@ namespace engine {
     void update(const float& deltatime);
     void render();
 
-    EntityManager m_entmgr;
-    SystemManager m_sysmgr;
+    SystemManager* m_sysmgr;
+    EntityManager* m_entmgr;
   };
 } // namespace engine

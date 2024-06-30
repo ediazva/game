@@ -1,5 +1,4 @@
 #pragma once
-
 namespace engine {
   class Engine;
 } // namespace engine
@@ -31,3 +30,4 @@ namespace engine {
     }                                                                \
     friend class engine::Engine;                                     \
   };
+  
