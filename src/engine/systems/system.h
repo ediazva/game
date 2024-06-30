@@ -1,14 +1,19 @@
 #pragma once
-#include "engine/entity_manager.h"
 
 namespace engine {
+  class EntityManager;
+  
   class System {
-    EntityManager& m_entityMgr;
+    EntityManager* m_entityMgr;
+  protected:
+    const EntityManager& entityMgr() const {return *m_entityMgr;}
   public:
-    System(EntityManager& entityMgr) :
-      m_entityMgr{entityMgr} {}
+    void setDependency(EntityManager* entityMgr) {
+      m_entityMgr = entityMgr;
+    }
 
-    virtual void init() = 0;
-    virtual void update() = 0;
+    virtual void init() {}
+    virtual void update(const float& deltatime) {}
+    virtual void render() {}
   };
 } // namespace engine

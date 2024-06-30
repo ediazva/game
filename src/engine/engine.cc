@@ -1,19 +1,20 @@
 #include "engine/engine.h"
 
-#include "engine/gameobject.h"
 #include "engine/raylib.h"
 #include "engine/assets/sound.h"
 #include "engine/assets/texture.h"
-// #include "componentes/genericos.h"
-// #include "sistemas/movimiento.h"
-// #include "sistemas/visualizar.h"
 
 namespace engine {
-  Engine::Engine(const char* title, unsigned w, unsigned h, int fps) {
+  Engine::Engine(const char* title, unsigned w, unsigned h, int fps) :
+    m_entmgr{},
+    m_sysmgr{} {
     raylib::InitWindow(w, h, title);
     if(fps > 0)
       raylib::SetTargetFPS(fps);
     raylib::InitAudioDevice();
+
+    configure_raylib_log();
+    m_sysmgr.setDepedencies(&m_entmgr);
   }
   Engine::~Engine() {
     raylib::CloseAudioDevice();
@@ -23,19 +24,15 @@ namespace engine {
   // ======================================================================
   // ASSETS CREATION
   // ======================================================================
-  assets::Sound Engine::makeSoundFromPath(const char* path, Result* res) {
+  assets::Sound Engine::makeSoundFromPath(const char* path) {
     assets::Sound snd;
     snd.copy_base(raylib::LoadSound(path));
-    if(res)
-      *res = raylib::IsSoundReady(snd) ? kSucess_Result : kResourceNotLoaded_Result;
     return snd;
   }
 
-  assets::Texture Engine::makeTextureFromPath(const char* path, Result* res) {
+  assets::Texture Engine::makeTextureFromPath(const char* path) {
     assets::Texture tex;
     tex.copy_base(raylib::LoadTexture(path));
-    if(res)
-      *res = raylib::IsTextureReady(tex) ? kSucess_Result : kResourceNotLoaded_Result;
     return tex;
   }
 
@@ -48,17 +45,15 @@ namespace engine {
   // ================
   // MAIN FUNCTIONS
   // ================
-  Result Engine::run() {
-    if(Result res = onInit(); res != kSucess_Result)
-      return res;
+  void Engine::run() {
+    onInit();
+    m_sysmgr.init();
 
     while(!raylib::WindowShouldClose()) {
       processInput();
       update(raylib::GetFrameTime());
       render();
     }
-
-    return kSucess_Result;
   }
 
   void Engine::processInput() {
@@ -70,13 +65,13 @@ namespace engine {
   void Engine::update(const float& deltatime) {
     onUpdate(deltatime);
 
-    // for(auto& obj : m_objects)
-      // obj->update(deltatime);
+    m_sysmgr.update(deltatime);
   }
 
   void Engine::render() {
     raylib::BeginDrawing();
     onRender();
+    m_sysmgr.render();
 
     raylib::EndDrawing();
   }

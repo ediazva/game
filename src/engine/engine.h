@@ -1,8 +1,6 @@
 #pragma once
-#include "engine/result.h"
-
-#include <vector>
-#include <memory>
+#include "engine/entity_manager.h"
+#include "engine/system_manager.h"
 
 namespace engine {
   namespace assets {
@@ -19,16 +17,18 @@ namespace engine {
     // ================
     // ASSETS CREATION
     // ================
-    assets::Sound makeSoundFromPath(const char* path, Result* res = nullptr);
-    assets::Texture makeTextureFromPath(const char* path, Result* res = nullptr);
+    assets::Sound makeSoundFromPath(const char* path);
+    assets::Texture makeTextureFromPath(const char* path);
     // assets::Tile makeTileFromPath(const char* path, Result* res = nullptr);
 
     // ================
     // MAIN FUNCTIONS
     // ================
-    Result run();
+    void run();
   protected:
-    virtual Result onInit() { return kSucess_Result; }
+    SystemManager& systemManager() {return m_sysmgr;}
+    EntityManager& entityManager() {return m_entmgr;}
+    virtual void onInit() {}
     virtual void onProcessInput() {}
     virtual void onUpdate(const float& deltatime) {}
     virtual void onRender() {}
@@ -37,6 +37,7 @@ namespace engine {
     void update(const float& deltatime);
     void render();
 
-    std::vector<std::unique_ptr<class GameObject>> m_objects;
+    EntityManager m_entmgr;
+    SystemManager m_sysmgr;
   };
 } // namespace engine

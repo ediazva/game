@@ -8,7 +8,7 @@ class GameEngine : public Engine {
 public:
   using Engine::Engine;
 
-  virtual Result onInit() override {
+  virtual void onInit() override {
     TimerManager::AddTimer(5.f) = [](){
       DEBUG_TRACE("Timer 5 segundos");
       return kContinue_TimerResult;
@@ -19,8 +19,6 @@ public:
         return kStop_TimerResult;
       return kContinue_TimerResult;
     };
-    
-    return kSucess_Result;
   }
 
   virtual void onUpdate(const float& deltatime) override {
@@ -32,5 +30,7 @@ int main() {
   configure_raylib_log();
   GameEngine eng("Timers", 100, 100);
 
-  return eng.run() == kSucess_Result;
+  eng.run();
+
+  return 0;
 }

@@ -14,6 +14,8 @@ add_library(engine-lib STATIC
   engine/timer_manager.cc
   engine/raylib.cc
   engine/debug.cc
+  engine/system_manager.cc
+  engine/systems/draw.cc
   # componentes/genericos.h
   engine/assets/texture_atlas.cc
 )

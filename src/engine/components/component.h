@@ -1,4 +1,6 @@
 #pragma once
+#include "engine/debug.h"
+
 #include <memory>
 #include <bitset>
 #include <array>
@@ -20,7 +22,9 @@ namespace engine {
     }
 
     // std::weak_ptr<Entity> entity;
-    virtual ~Component() = default;
+    virtual ~Component() {
+      DEBUG_TRACE("[Component] destructor!!");
+    }
   private:
     static ID MakeID() {
       static ID s_lastID{};

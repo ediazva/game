@@ -12,15 +12,13 @@ class GameEngine : public Engine {
 public:
   using Engine::Engine;
 
-  Result onInit() override {
+  void onInit() override {
     atlas.makeFromTexture(
       makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
       {
         .size = {16,16},
         .scale = 16.f
       });
-
-    return kSucess_Result;
   }
 
   float idx = 0;
@@ -50,5 +48,7 @@ int main() {
   configure_raylib_log();
   GameEngine eng("Django: Sin palomas", 800, 400, 60);
   
-  return eng.run();
+  eng.run();
+
+  return 0;
 }
