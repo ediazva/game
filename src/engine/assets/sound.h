@@ -3,9 +3,5 @@
 #include "engine/assets/priv/raylib_wrapper.h"
 
 namespace engine::assets {
-  BEGIN_RAYLIB_WRAPPER(Sound, raylib::Sound)
-    ~Sound() {
-      raylib::UnloadSound(*this);
-    }
-  END_RAYLIB_WRAPPER
+  CREATE_RAYLIB_WRAPPER(Sound, raylib::Sound, raylib::UnloadSound, raylib::IsSoundReady)
 } // namespace engine::assets
