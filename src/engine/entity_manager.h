@@ -9,13 +9,13 @@ namespace engine {
       return m_pool.emplace_back(std::make_shared<Entity>());
     }
 
-    template<component_t... T>
+    template <component_t... T>
     std::vector<EntityPtr> getEntities() const {
       std::vector<EntityPtr> res;
       for(auto& e : m_pool)
         if(e->hasComponent<T...>())
           res.push_back(e);
-      
+
       return res;
     }
 

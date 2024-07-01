@@ -1,5 +1,7 @@
 #include "engine/engine.h"
 #include "engine/components/sprite.h"
+#include "engine/entity_manager.h"
+#include "engine/system_manager.h"
 #include "engine/systems/draw.h"
 using namespace engine;
 
@@ -10,8 +12,8 @@ public:
   virtual void onInit() override {
     systemManager().addSystem(std::make_shared<DrawSystem>());
     entityManager().addEntity()->addComponent<SpriteComponent>(
-      makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
-      assets::TextureAtlas::Info{.size = {16,16}});
+        makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
+        assets::TextureAtlas::Info{ .size = { 16, 16 } });
   }
 };
 

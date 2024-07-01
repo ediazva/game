@@ -16,7 +16,8 @@ add_library(engine-lib STATIC
   engine/debug.cc
   engine/system_manager.cc
   engine/systems/draw.cc
-  # componentes/genericos.h
+  engine/systems/movement.cc
+  engine/systems/hitbox.cc
   engine/assets/texture_atlas.cc
 )
 target_link_libraries(engine-lib raylib)
