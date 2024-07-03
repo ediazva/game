@@ -5,7 +5,7 @@
 namespace engine {
   struct HitboxComponent : public Component {
     // Hitbox circular por el momento
-    float radius;
+    float radius{};
 
     HitboxComponent() = default;
     HitboxComponent(float radius) : radius(radius) {

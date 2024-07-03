@@ -6,6 +6,8 @@
 #include "raylib.h"
 #include <memory>
 
+#include <iostream>
+
 namespace engine {
 
   /*
@@ -22,24 +24,37 @@ namespace engine {
       ent->getComponent<VelocityComponent>().vector = { -30, -30 };
     }
   }
+
+  /*
+   * Detectamos eventos del mouse internamente
+   * Hacemos un shift de la hitbox para que concuerde con el sprite
+   * Asumimos que la hitbox es de las mismas dimensiones que el sprite(en lo posible)
+   * TODO: ??? Es posible que se rompa en algun cuadrante negativo????
+   */
   void HitboxSystem::update(const float& deltatime) {
     using namespace raylib;
+    raylib::PollInputEvents();
+    if(!IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+      return;
+
+    // if(IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+    //   std::cout << "Hit" << std::endl;
 
     auto entities = entityMgr().getEntities<PositionComponent, HitboxComponent>();
     auto mouse_pos = raylib::GetMousePosition();
+    // std::cout << mouse_pos.x << " " << mouse_pos.y << std::endl;
 
     for(auto& e : entities) {
       auto& position = e->getComponent<PositionComponent>();
       auto& hitbox = e->getComponent<HitboxComponent>();
-      // std::cout << sqrt((mouse_pos.x - ptr_pos->coord.x) * (mouse_pos.x - ptr_pos->coord.x) +
-      //                   (mouse_pos.y - ptr_pos->coord.y) * (mouse_pos.y - ptr_pos->coord.y))
-      //           << std::endl;
-
       // Check si coords se encuentran dentro de hitbox
-      if(sqrt(
-             (mouse_pos.x - position.coord.x) * (mouse_pos.x - position.coord.x) +
-             (mouse_pos.y - position.coord.y) * (mouse_pos.y - position.coord.y)) <=
-         hitbox.radius) {
+      auto x = mouse_pos.x - position.coord.x - hitbox.radius;
+      auto y = mouse_pos.y - position.coord.y - hitbox.radius;
+      if(sqrt(x * x + y * y) <= hitbox.radius) {
+        std::cout << sqrt((mouse_pos.x - position.coord.x) * (mouse_pos.x - position.coord.x) +
+                          (mouse_pos.y - position.coord.y) * (mouse_pos.y - position.coord.y))
+                  << std::endl;
+
         reset_entity(e);
       }
     }

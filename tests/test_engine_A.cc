@@ -44,13 +44,20 @@ public:
     /*
      * Inicializaciones ejemplo
      */
-    // entityManager().addEntity()->addComponent<Component, SpriteComponent, PositionComponent, HitboxComponent, VelocityComponent>();
-    // entityManager().addEntity()->addComponent<Component, SpriteComponent, PositionComponent, HitboxComponent, VelocityComponent>();
-    // entityManager().addEntity()->addComponent<Component, SpriteComponent, PositionComponent, HitboxComponent, VelocityComponent>();
-    // entityManager().addEntity()->addComponent<Component, SpriteComponent, PositionComponent, HitboxComponent, VelocityComponent>();
-    // entityManager().addEntity()->addComponent<Component, SpriteComponent, PositionComponent, HitboxComponent, VelocityComponent>();
-    //
-    for(auto& e : const_cast<std::vector<EntityPtr>&>(EntityManager().getEntities())) {
+
+    for(int i{}; i < 5; ++i) {
+      auto& ptr_ent = entityManager().addEntity();
+      ptr_ent->addComponent<SpriteComponent>(
+          makeTextureFromPath("data/img/huevo_chiquito.png"),
+          assets::TextureAtlas::Info{ .size = { 128, 128 } });
+      ptr_ent->addComponent<PositionComponent>();
+      ptr_ent->addComponent<HitboxComponent>(64);
+      ptr_ent->addComponent<VelocityComponent>();
+    }
+
+    // auto conj = entityManager().getEntities<PositionComponent, VelocityComponent>();
+
+    for(auto e : entityManager().getEntities<PositionComponent, VelocityComponent>()) {
       reset_entity(e);
     }
   }

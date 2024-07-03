@@ -8,9 +8,8 @@
 #include "engine/assets/texture.h"
 
 namespace engine {
-  Engine::Engine(const char* title, unsigned w, unsigned h, int fps) :
-    m_entmgr{new EntityManager},
-    m_sysmgr{new SystemManager} {
+  Engine::Engine(const char* title, unsigned w, unsigned h, int fps) : m_entmgr{ new EntityManager },
+                                                                       m_sysmgr{ new SystemManager } {
     raylib::InitWindow(w, h, title);
     if(fps > 0)
       raylib::SetTargetFPS(fps);
