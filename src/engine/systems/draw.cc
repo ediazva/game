@@ -10,7 +10,7 @@ namespace engine {
 
     ClearBackground(LIGHTGRAY);
 
-    auto comps = entityMgr().getEntities<SpriteComponent>();
+    auto comps = entityMgr().getEntities<SpriteComponent, PositionComponent>();
     for(auto& e : comps) {
       auto& sprite = e->getComponent<SpriteComponent>();
       auto& position = e->getComponent<PositionComponent>();

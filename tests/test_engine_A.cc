@@ -22,7 +22,7 @@ class GameEngine : public Engine {
 public:
   using Engine::Engine;
 
-  void reset_entity(std::shared_ptr<Entity>& ent) {
+  void resetEntity(std::shared_ptr<Entity>& ent) {
     int rand_x = raylib::GetRandomValue(200, 1300);
     ent->getComponent<PositionComponent>().coord = { (float)rand_x, 1000 };
 
@@ -58,7 +58,7 @@ public:
     // auto conj = entityManager().getEntities<PositionComponent, VelocityComponent>();
 
     for(auto e : entityManager().getEntities<PositionComponent, VelocityComponent>()) {
-      reset_entity(e);
+      resetEntity(e);
     }
   }
 };
