@@ -14,14 +14,16 @@ namespace engine {
    * Reset basico de coordenadas
    * ??? El reset es interno del sistema???
    */
-  void HitboxSystem::reset_entity(std::shared_ptr<Entity>& ent) {
+  void HitboxSystem::reset_entity(std::shared_ptr<Entity>& ent, const float& deltatime) {
     int rand_x = raylib::GetRandomValue(200, 1300);
+    float vel = 300;
+
     ent->getComponent<PositionComponent>().coord = { (float)rand_x, 1000 };
 
     if(rand_x < 500) {
-      ent->getComponent<VelocityComponent>().vector = { 30, -30 };
+      ent->getComponent<VelocityComponent>().vector = { vel, -vel };
     } else {
-      ent->getComponent<VelocityComponent>().vector = { -30, -30 };
+      ent->getComponent<VelocityComponent>().vector = { -vel, -vel };
     }
   }
 
@@ -34,7 +36,7 @@ namespace engine {
   void HitboxSystem::update(const float& deltatime) {
     using namespace raylib;
     raylib::PollInputEvents();
-    if(!IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+    if(!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) // Cambio a solo tap/cooldown
       return;
 
     // if(IsMouseButtonDown(MOUSE_BUTTON_LEFT))
@@ -55,7 +57,7 @@ namespace engine {
                           (mouse_pos.y - position.coord.y) * (mouse_pos.y - position.coord.y))
                   << std::endl;
 
-        reset_entity(e);
+        reset_entity(e, deltatime);
       }
     }
   }

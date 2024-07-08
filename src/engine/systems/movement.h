@@ -15,10 +15,10 @@ namespace engine {
                       const float& deltatime);
     void randomBounce(PositionComponent& position, VelocityComponent& velocity,
                       const float& deltatime);
-    MovementSystem() : eng(dev()), zero_2pi_dist(0, std::numbers::pi_v<float>){};
 
 
   public:
     virtual void update(const float& deltatime) override;
+    MovementSystem() : eng(dev()), zero_2pi_dist(0, 2 * std::numbers::pi){};
   };
 } // namespace engine

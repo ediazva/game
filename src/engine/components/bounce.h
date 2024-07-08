@@ -9,9 +9,9 @@ namespace engine {
    * - Cambiar de dirección cada cierto tiempo
    */
   struct BounceComponent : public Component {
-    static float maxcooldown;
-    float cooldown = { maxcooldown };
+    constexpr static const float max_cooldown{ 500 };
+    float cooldown = { max_cooldown };
 
-    BounceComponent() : cooldown(maxcooldown){};
+    BounceComponent() : cooldown(max_cooldown){};
   };
 } // namespace engine

@@ -6,6 +6,8 @@
 #include "engine/components/velocity.h"
 #include <cmath>
 
+#include <iostream>
+
 namespace engine {
   /*
    * Invierte dirección de vectores dependiendo de si esta en borde
@@ -14,20 +16,20 @@ namespace engine {
   bool MovementSystem::borderBounce(PositionComponent& position,
                                     VelocityComponent& velocity, const float& deltatime) {
 
-    bool bounce = false;
+    bool bounced = false;
     // Bordes, ????suma de threshold para que no sea tan exacto????
     if(position.coord.x + velocity.vector.x * deltatime < 0 ||
        position.coord.x + velocity.vector.x * deltatime > 1500) {
       velocity.vector.x *= -1;
-      bounce = true;
+      bounced = true;
     }
 
     if(position.coord.y + velocity.vector.y * deltatime < 0 ||
        position.coord.y + velocity.vector.y * deltatime > 1000) {
       velocity.vector.y *= -1;
-      bounce = true;
+      bounced = true;
     }
-    return bounce;
+    return bounced;
   }
 
   void MovementSystem::randomBounce(PositionComponent& position, VelocityComponent& velocity,
@@ -35,10 +37,12 @@ namespace engine {
     float radius = std::sqrt(velocity.vector.x * velocity.vector.x +
                              velocity.vector.y * velocity.vector.y),
           ang = zero_2pi_dist(eng);
+    velocity.vector.x = radius * std::sin(ang);
+    velocity.vector.y = radius * std::cos(ang);
   }
 
   /*
-   * Sistema que mueve patos
+   * Sistema que mueve patos y realiza los "bounces"
    * *** Proximamente se puede crear un sistema especifico para patos y
    * otro para particulas(Sin bounce) ***
    */
@@ -55,10 +59,12 @@ namespace engine {
 
       if(~borderBounce(position, velocity, deltatime) && bounce.cooldown < 0) {
         randomBounce(position, velocity, deltatime);
+        bounce.cooldown = BounceComponent::max_cooldown;
       }
 
       position.coord.x += (velocity.vector.x) * deltatime;
       position.coord.y += (velocity.vector.y) * deltatime;
+      bounce.cooldown -= 10;
     }
   }
 } // namespace engine

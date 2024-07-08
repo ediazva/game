@@ -13,6 +13,7 @@
 #include "engine/components/hitbox.h"
 #include "engine/components/velocity.h"
 #include "engine/components/sprite.h"
+#include "engine/components/bounce.h"
 
 #include "raylib.h"
 
@@ -22,14 +23,15 @@ class GameEngine : public Engine {
 public:
   using Engine::Engine;
 
-  void resetEntity(std::shared_ptr<Entity>& ent) {
+  void resetEntity(std::shared_ptr<Entity>& ent, const float& deltatime) {
     int rand_x = raylib::GetRandomValue(200, 1300);
-    ent->getComponent<PositionComponent>().coord = { (float)rand_x, 1000 };
+    float vel = 300;
+    ent->getComponent<PositionComponent>().coord = { (float)rand_x, 800 };
 
     if(rand_x < 500) {
-      ent->getComponent<VelocityComponent>().vector = { 30, -30 };
+      ent->getComponent<VelocityComponent>().vector = { vel, -vel };
     } else {
-      ent->getComponent<VelocityComponent>().vector = { -30, -30 };
+      ent->getComponent<VelocityComponent>().vector = { -vel, -vel };
     }
   }
 
@@ -53,12 +55,13 @@ public:
       ptr_ent->addComponent<PositionComponent>();
       ptr_ent->addComponent<HitboxComponent>(64);
       ptr_ent->addComponent<VelocityComponent>();
+      ptr_ent->addComponent<BounceComponent>();
     }
 
     // auto conj = entityManager().getEntities<PositionComponent, VelocityComponent>();
 
     for(auto e : entityManager().getEntities<PositionComponent, VelocityComponent>()) {
-      resetEntity(e);
+      resetEntity(e, raylib::GetFrameTime());
     }
   }
 };
