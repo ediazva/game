@@ -11,7 +11,7 @@
 namespace engine {
   /*
    * Invierte dirección de vectores dependiendo de si esta en borde
-   * TODO: Como saber los bordes de la ventana
+   * TODO: Tomar en cuenta la hitbox del objeto/sprite
    */
   bool MovementSystem::borderBounce(PositionComponent& position,
                                     VelocityComponent& velocity, const float& deltatime) {

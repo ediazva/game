@@ -5,10 +5,16 @@
 
 namespace engine {
   struct SpriteComponent : public Component {
-    assets::TextureAtlas atlas;
-    
-    SpriteComponent(assets::Texture&& tex, const assets::TextureAtlas::Info& info) {
-      atlas.makeFromTexture(std::move(tex), info);
+    assets::TextureAtlas& atlas;
+    unsigned atlIdx{};
+
+    // SpriteComponent(assets::Texture&& tex, const assets::TextureAtlas::Info& info) {
+    //   atlas.makeFromTexture(std::move(tex), info);
+    // }
+    SpriteComponent(assets::TextureAtlas& atlas, unsigned atlIdx = 0) : atlas(atlas), atlIdx(atlIdx) {}
+
+    ~SpriteComponent() {
+      DEBUG_TRACE("SpriteComponent destruido");
     }
   };
 } // namespace engine

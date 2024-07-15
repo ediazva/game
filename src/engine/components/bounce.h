@@ -7,6 +7,7 @@ namespace engine {
    * Componente que determina si una entidad debe:
    * - "revotar" al chocar con un borde de pantalla
    * - Cambiar de dirección cada cierto tiempo
+   *  TODO: Usar deltatime
    */
   struct BounceComponent : public Component {
     constexpr static const float max_cooldown{ 500 };

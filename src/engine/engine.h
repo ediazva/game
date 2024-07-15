@@ -1,5 +1,9 @@
 #pragma once
 
+#include <array>
+#include <memory>
+#include <vector>
+
 namespace engine {
   class SystemManager;
   class EntityManager;
@@ -12,7 +16,7 @@ namespace engine {
 
   class Engine {
   public:
-    Engine(const char* title, unsigned w, unsigned h, int fps = -1);
+    Engine(const char* title, unsigned w, unsigned h, int fps = -1, int nEntMgr = 1);
     ~Engine();
 
     // ================
@@ -28,7 +32,7 @@ namespace engine {
     void run();
   protected:
     SystemManager& systemManager();
-    EntityManager& entityManager();
+    EntityManager& entityManager(int index = 0);
     virtual void onInit() {}
     virtual void onProcessInput() {}
     virtual void onUpdate(const float& deltatime) {}
@@ -38,7 +42,9 @@ namespace engine {
     void update(const float& deltatime);
     void render();
 
-    SystemManager* m_sysmgr;
-    EntityManager* m_entmgr;
+    // SystemManager* m_sysmgr;
+    // EntityManager* m_entmgr;
+    std::unique_ptr<SystemManager> m_sysmgr;
+    std::vector<std::unique_ptr<EntityManager>> m_entmgrs;
   };
 } // namespace engine

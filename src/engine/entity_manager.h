@@ -22,5 +22,9 @@ namespace engine {
     const std::vector<EntityPtr>& getEntities() const {
       return m_pool;
     }
+
+    void clearEntities() {
+      m_pool.clear();
+    }
   };
 } // namespace engine

@@ -6,21 +6,26 @@
 #include "engine/system_manager.h"
 #include "engine/assets/sound.h"
 #include "engine/assets/texture.h"
+#include <memory>
 
 namespace engine {
-  Engine::Engine(const char* title, unsigned w, unsigned h, int fps) : m_entmgr{ new EntityManager },
-                                                                       m_sysmgr{ new SystemManager } {
+  Engine::Engine(const char* title, unsigned w, unsigned h, int fps, int nEntMgr) : m_sysmgr{ std::make_unique<SystemManager>() } {
+
+    for(int i{}; i < nEntMgr; ++i) {
+      m_entmgrs.push_back(std::make_unique<EntityManager>());
+    }
+
     raylib::InitWindow(w, h, title);
     if(fps > 0)
       raylib::SetTargetFPS(fps);
     raylib::InitAudioDevice();
 
     configure_raylib_log();
-    m_sysmgr->setDepedencies(m_entmgr);
+    m_sysmgr->setDepedencies(m_entmgrs[0].get());
   }
   Engine::~Engine() {
-    delete m_entmgr;
-    delete m_sysmgr;
+    // delete m_entmgr;
+    // delete m_sysmgr;
     raylib::CloseAudioDevice();
     raylib::CloseWindow();
   }
@@ -53,8 +58,8 @@ namespace engine {
     return *m_sysmgr;
   }
 
-  EntityManager& Engine::entityManager() {
-    return *m_entmgr;
+  EntityManager& Engine::entityManager(int index) {
+    return *m_entmgrs[index];
   }
 
   void Engine::run() {

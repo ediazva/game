@@ -11,9 +11,9 @@ public:
 
   virtual void onInit() override {
     systemManager().addSystem(std::make_shared<DrawSystem>());
-    entityManager().addEntity()->addComponent<SpriteComponent>(
-        makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
-        assets::TextureAtlas::Info{ .size = { 16, 16 } });
+    //   entityManager().addEntity()->addComponent<SpriteComponent>(
+    //       makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
+    //       assets::TextureAtlas::Info{ .size = { 16, 16 } });
   }
 };
 

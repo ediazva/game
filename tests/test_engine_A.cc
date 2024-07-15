@@ -1,4 +1,4 @@
-#include "engine/components/component.h"
+#include "engine/debug.h"
 #include "engine/engine.h"
 
 // #include "engine/entity.h"
@@ -14,8 +14,10 @@
 #include "engine/components/velocity.h"
 #include "engine/components/sprite.h"
 #include "engine/components/bounce.h"
+#include "engine/components/text.h"
 
 #include "raylib.h"
+#include <string>
 
 using namespace engine;
 
@@ -23,47 +25,96 @@ class GameEngine : public Engine {
 public:
   using Engine::Engine;
 
-  void resetEntity(std::shared_ptr<Entity>& ent, const float& deltatime) {
-    int rand_x = raylib::GetRandomValue(200, 1300);
-    float vel = 300;
-    ent->getComponent<PositionComponent>().coord = { (float)rand_x, 800 };
+  // Estados de juego a ser usado
+  enum State {
+    Menu,
+    Round
+  };
 
-    if(rand_x < 500) {
-      ent->getComponent<VelocityComponent>().vector = { vel, -vel };
-    } else {
-      ent->getComponent<VelocityComponent>().vector = { -vel, -vel };
+  // Asignamos un index a nuestro contenedor de texture atlas
+  enum Textures {
+    Paloma
+  };
+
+  GameEngine(const char* title, unsigned w, unsigned h, int fps)
+      : Engine(title, w, h, fps, 2) {
+    // Carga de texturas
+    atlases.emplace_back(makeTextureFromPath("data/img/huevo_chiquito.png"),
+                         assets::TextureAtlas::Info{ .size = { 128, 128 } });
+  }
+
+  void changeState(State state) {
+    m_state = state;
+    systemManager().setDepedencies(&entityManager(m_state));
+    resetEntities();
+  }
+
+  // TODO: Cambiar a un factory de componentes?????
+  void resetEntities() {
+    // entityManager(m_state).getEntities().empty();
+    entityManager(m_state).clearEntities();
+
+    switch(m_state) {
+    case Menu: { // Entidades temporales para el menu
+      auto& ptr_obj = entityManager().addEntity();
+      ptr_obj->addComponent<SpriteComponent>(
+          atlases[Paloma], 0);
+      ptr_obj->addComponent<PositionComponent>(300, 300);
+      ptr_obj->addComponent<VelocityComponent>(300, -300);
+      ptr_obj->addComponent<BounceComponent>();
+
+      auto& ptr_text = entityManager().addEntity();
+      ptr_text->addComponent<PositionComponent>(500, 500);
+      ptr_text->addComponent<TextComponent>("Menu principal", raylib::WHITE, 50);
+
+      break;
     }
+    case Round: {
+
+      for(int i{}; i < 5; ++i) {
+        auto& ptr_ent = entityManager().addEntity();
+        // ptr_ent->addComponent<SpriteComponent>(
+        //     makeTextureFromPath("data/img/huevo_chiquito.png"),
+        //     assets::TextureAtlas::Info{ .size = { 128, 128 } });
+        ptr_ent->addComponent<SpriteComponent>(
+            atlases[Paloma], 0);
+
+        ptr_ent->addComponent<PositionComponent>(raylib::GetRandomValue(200, 1300), 800);
+        ptr_ent->addComponent<HitboxComponent>(64);
+        ptr_ent->addComponent<VelocityComponent>(300, -300);
+        ptr_ent->addComponent<BounceComponent>();
+      }
+      break;
+    }
+    }
+
+    // m_entmgr
   }
 
   void onInit() override {
     systemManager().addSystem(std::make_shared<DrawSystem>());
     systemManager().addSystem(std::make_shared<MovementSystem>());
     systemManager().addSystem(std::make_shared<HitboxSystem>());
-    // entityManager().addEntity()->addComponent<SpriteComponent>(
-    //     makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
-    //     assets::TextureAtlas::Info{ .size = { 16, 16 } });
+    resetEntities();
+  }
 
-    /*
-     * Inicializaciones ejemplo
-     */
-
-    for(int i{}; i < 5; ++i) {
-      auto& ptr_ent = entityManager().addEntity();
-      ptr_ent->addComponent<SpriteComponent>(
-          makeTextureFromPath("data/img/huevo_chiquito.png"),
-          assets::TextureAtlas::Info{ .size = { 128, 128 } });
-      ptr_ent->addComponent<PositionComponent>();
-      ptr_ent->addComponent<HitboxComponent>(64);
-      ptr_ent->addComponent<VelocityComponent>();
-      ptr_ent->addComponent<BounceComponent>();
-    }
-
-    // auto conj = entityManager().getEntities<PositionComponent, VelocityComponent>();
-
-    for(auto e : entityManager().getEntities<PositionComponent, VelocityComponent>()) {
-      resetEntity(e, raylib::GetFrameTime());
+  void onProcessInput() override {
+    // raylib::IsKeyDown(/)
+    // if(IsKeyPressed(raylib::KEY_F3)) {
+    raylib::PollInputEvents();
+    DEBUG_TRACE(std::to_string(raylib::GetKeyPressed()).c_str());
+    if(IsKeyDown(raylib::KEY_F3)) {
+      DEBUG_TRACE("Cambio de estado");
+      if(m_state == Menu)
+        changeState(Round);
+      else
+        changeState(Menu);
     }
   }
+
+private:
+  State m_state{ Menu };
+  std::vector<assets::TextureAtlas> atlases;
 };
 
 int main() {
