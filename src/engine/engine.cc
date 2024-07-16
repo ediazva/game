@@ -74,7 +74,7 @@ namespace engine {
   }
 
   void Engine::processInput() {
-    raylib::PollInputEvents();
+    // raylib::PollInputEvents();
 
     onProcessInput();
   }
