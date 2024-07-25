@@ -22,7 +22,13 @@ add_library(engine-lib STATIC
   engine/systems/animation.cc
   engine/assets/texture_atlas.cc
 )
-target_link_libraries(engine-lib raylib)
+
+set(ENGINE_LIBS raylib)
+if(WIN32)
+  list(APPEND ENGINE_LIBS Winmm.lib)
+endif()
+
+target_link_libraries(engine-lib ${ENGINE_LIBS})
 target_compile_definitions(engine-lib PUBLIC ${GAME_FLAGS})
 
 add_executable(game
