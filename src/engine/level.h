@@ -24,8 +24,15 @@ namespace engine {
     void processInput();
     void update(float deltatime);
     void render();
+#ifdef __cpp_explicit_this_parameter
     auto&& entityManager(this auto&& self) {return self.m_entMgr;}
     auto&& systemManager(this auto&& self) {return self.m_sysMgr;}
+#else
+    const auto& entityManager() const {return m_entMgr;}
+    auto& entityManager() {return m_entMgr;}
+    const auto& systemManager() const {return self.m_sysMgr;}
+    auto& systemManager() {return self.m_sysMgr;}
+#endif
     LevelID id() const;
   };
 

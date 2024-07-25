@@ -3,10 +3,22 @@
 #include "engine/assets/texture.h"
 #include "engine/assets/texture_atlas.h"
 
-// JUEGO
+#include <unordered_map>
+
 namespace game {
+  // JUEGO
   class Level1 : public engine::Level {
-    static inline constexpr const float SCALE = 2.f; 
+    std::unordered_map<const char*, engine::assets::TextureAtlas> textureAtlas;
+    
+    engine::assets::Texture background1;
+    engine::assets::Texture nubes;
+    engine::assets::Texture muro_izquierdo;
+    engine::assets::Texture mi_cerro;
+
+    engine::EntityPtr ropaCerro;
+    // 103x60
+    
+    /*static inline constexpr const float SCALE = 2.f; 
     static inline constexpr const float CLOUDS_SPEED = 14.f; 
     engine::assets::Texture m_background;
     engine::assets::Texture m_background2;
@@ -25,7 +37,10 @@ namespace game {
     struct {
       float x; // Parallax effect
       engine::assets::Texture tex;
-    } m_nubes;
+    } m_nubes;*/
+
+    void initializeSystemManager();
+    void initializeEntityManager();
 
     virtual void onInit() override;
     virtual void onProcessInput() override;
