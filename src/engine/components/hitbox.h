@@ -9,6 +9,8 @@ namespace engine {
     // TODO: Cambiar hitbox rectangular
     // TODO: Añadir OnCollision, OnCollisionEnter
 
+    bool alive{ true }; // Si esta muerto no es interactuable
+
     HitboxComponent() = default;
     HitboxComponent(float radius) : radius(radius) {
     }
