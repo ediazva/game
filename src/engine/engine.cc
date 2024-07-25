@@ -59,7 +59,7 @@ namespace engine {
   }
 
   EntityManager& Engine::entityManager(int index) {
-    return *m_entmgrs[index];
+    return *m_entmgrs.at(index);
   }
 
   void Engine::run() {
