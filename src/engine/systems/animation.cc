@@ -2,6 +2,7 @@
 #include "engine/entity_manager.h"
 #include "engine/components/sprite.h"
 #include "engine/components/animation.h"
+#include <string>
 
 namespace engine {
   void AnimationSystem::update(float deltatime) {
@@ -12,16 +13,20 @@ namespace engine {
       auto& anim = e->getComponent<AnimationComponent>();
       auto& sprite = e->getComponent<SpriteComponent>();
 
-      if(anim.currentFrame >= anim.frames.size()) {
+      auto& frameIndex = anim.currentFrame;
+      auto& frames = anim.stateMap.at(anim.currentState);
+
+      if(frameIndex >= frames.size()) {
         anim.currentFrame = 0;
       }
 
-      auto frame = anim.frames[anim.currentFrame];
+      auto& frame = frames[frameIndex];
+
       frame.elapsedTime += deltatime;
-      sprite.atlIdx = frame.spriteIndex;
+      sprite.stateMap.at(sprite.currentState).second = frame.spriteIndex;
 
       if(frame.elapsedTime >= anim.animationSpeed) {
-        anim.currentFrame++;
+        frameIndex++;
         frame.elapsedTime = 0;
       }
     }

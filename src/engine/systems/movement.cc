@@ -1,5 +1,6 @@
 #include "engine/systems/movement.h"
 #include "engine/components/bounce.h"
+#include "engine/components/hitbox.h"
 #include "engine/entity_manager.h"
 #include "engine/assets/texture.h"
 #include "engine/components/position.h"
@@ -50,14 +51,16 @@ namespace engine {
     using namespace raylib;
 
     auto entidades =
-        entityMgr().getEntities<PositionComponent, VelocityComponent, BounceComponent>();
+        entityMgr()
+            .getEntities<PositionComponent, VelocityComponent, BounceComponent, HitboxComponent>();
 
     for(auto& e : entidades) {
       auto& position = e->getComponent<PositionComponent>();
       auto& velocity = e->getComponent<VelocityComponent>();
       auto& bounce = e->getComponent<BounceComponent>();
+      auto& hitbox = e->getComponent<HitboxComponent>();
 
-      if(~borderBounce(position, velocity, deltatime) && bounce.cooldown < 0) {
+      if(hitbox.alive && ~borderBounce(position, velocity, deltatime) && bounce.cooldown < 0) {
         randomBounce(position, velocity, deltatime);
         bounce.cooldown = BounceComponent::max_cooldown;
       }

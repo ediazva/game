@@ -20,6 +20,7 @@ add_library(engine-lib STATIC
   engine/systems/movement.cc
   engine/systems/hitbox.cc
   engine/systems/animation.cc
+  engine/systems/player.cc
   engine/assets/texture_atlas.cc
 )
 target_link_libraries(engine-lib raylib)

@@ -19,19 +19,25 @@ namespace engine {
 
       // DrawTexture(sprite.atlas->texture(), position.coord.x,
       //             position.coord.y, WHITE);
-      Rectangle rect{ sprite.atlas.rectOrigin(sprite.atlIdx).x,
-                      sprite.atlas.rectOrigin(sprite.atlIdx).y,
-                      (float)sprite.atlas.info().size.w,
-                      (float)sprite.atlas.info().size.h };
-      DrawTextureRec(sprite.atlas.texture(), rect, position.coord, WHITE);
-      const auto& og = sprite.atlas.rectOrigin(sprite.atlIdx);
-      const auto& size = sprite.atlas.info().size;
+      // auto& atlasPair = sprite.stateMap[sprite.currentState];
+      auto& atlas = sprite.stateMap.at(sprite.currentState).first;
+      auto& atlIdx = sprite.stateMap.at(sprite.currentState).second;
+
+      Rectangle rect{ atlas.rectOrigin(atlIdx).x,
+                      atlas.rectOrigin(atlIdx).y,
+                      (float)atlas.info().size.w,
+                      (float)atlas.info().size.h };
+      DrawTextureRec(atlas.texture(), rect, position.coord, WHITE);
+      const auto& og = atlas.rectOrigin(atlIdx);
+      const auto& size = atlas.info().size;
 
       // TODO: Width negativo indica un mirror de textura
       DrawTexturePro(
-          sprite.atlas.texture(),
+          atlas.texture(),
           { og.x, og.y, static_cast<float>(size.w), static_cast<float>(size.h) },
-          { position.coord.x, position.coord.y, size.w * sprite.atlas.info().scale, size.h * sprite.atlas.info().scale }, {}, 0.f, WHITE);
+          { position.coord.x - sprite.offset.x, position.coord.y - sprite.offset.y,
+            size.w * atlas.info().scale, size.h * atlas.info().scale },
+          {}, 0.f, WHITE);
     }
 
     // Identidades que contienen un texto
@@ -40,7 +46,7 @@ namespace engine {
       auto& text = e->getComponent<TextComponent>();
       auto& position = e->getComponent<PositionComponent>();
 
-      DrawText(text.str.c_str(), position.coord.x, position.coord.x,
+      DrawText((text.str1 + text.str2).c_str(), position.coord.x, position.coord.x,
                text.fontSize, text.color);
     }
 
