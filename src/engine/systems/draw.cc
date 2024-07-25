@@ -7,10 +7,8 @@
 #include "raylib.h"
 
 namespace engine {
-  void DrawSystem::update(float deltatime) {
+  void DrawSystem::render() {
     using namespace raylib;
-
-    ClearBackground(LIGHTGRAY);
 
     auto comps = entityMgr().getEntities<SpriteComponent, PositionComponent>();
     for(auto& e : comps) {
