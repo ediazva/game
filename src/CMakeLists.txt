@@ -12,7 +12,6 @@ endif()
 add_library(engine-lib STATIC
   engine/engine.cc
   engine/timer_manager.cc
-  engine/raylib.cc
   engine/debug.cc
   engine/system_manager.cc
   engine/systems/draw.cc
@@ -23,3 +22,6 @@ add_library(engine-lib STATIC
 )
 target_link_libraries(engine-lib raylib)
 target_compile_definitions(engine-lib PUBLIC ${GAME_FLAGS})
+
+add_executable(game game/main.cc)
+target_link_libraries(game engine-lib)
