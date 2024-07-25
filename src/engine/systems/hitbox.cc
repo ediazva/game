@@ -56,7 +56,9 @@ namespace engine {
         std::cout << sqrt((mouse_pos.x - position.coord.x) * (mouse_pos.x - position.coord.x) +
                           (mouse_pos.y - position.coord.y) * (mouse_pos.y - position.coord.y))
                   << std::endl;
-
+        // onCollisionEnter(e)
+        // onCollision(e)
+        // onCollisionLeave(e)
         reset_entity(e, deltatime);
       }
     }
