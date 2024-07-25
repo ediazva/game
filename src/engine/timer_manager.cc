@@ -22,7 +22,7 @@ namespace engine {
     return s_timers.back().fn;
   }
 
-  void TimerManager::Tick(const float& deltatime) {
+  void TimerManager::Tick(float deltatime) {
     for(auto it = s_timers.begin(); it != s_timers.end(); ++it) {
       it->elapsed += deltatime;
       if(it->elapsed >= it->delay) {

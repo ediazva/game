@@ -23,7 +23,7 @@ public:
 
   float idx = 0;
 
-  void onUpdate(const float& deltatime) override {
+  void onUpdate(float deltatime) override {
     idx += deltatime;
     if(idx > atlas.nrects())
       idx = 0.f;

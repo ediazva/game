@@ -6,7 +6,7 @@
 namespace engine {
   class HitboxSystem : public System {
   public:
-    virtual void update(const float& deltatime) override;
-    void reset_entity(std::shared_ptr<Entity>& ent, const float& deltatime);
+    virtual void update(float deltatime) override;
+    void reset_entity(std::shared_ptr<Entity>& ent, float deltatime);
   };
 } // namespace engine

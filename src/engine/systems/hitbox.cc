@@ -14,7 +14,7 @@ namespace engine {
    * Reset basico de coordenadas
    * ??? El reset es interno del sistema???
    */
-  void HitboxSystem::reset_entity(std::shared_ptr<Entity>& ent, const float& deltatime) {
+  void HitboxSystem::reset_entity(std::shared_ptr<Entity>& ent, float deltatime) {
     int rand_x = raylib::GetRandomValue(200, 1300);
     float vel = 300;
 
@@ -33,7 +33,7 @@ namespace engine {
    * Asumimos que la hitbox es de las mismas dimensiones que el sprite(en lo posible)
    * TODO: ??? Es posible que se rompa en algun cuadrante negativo????
    */
-  void HitboxSystem::update(const float& deltatime) {
+  void HitboxSystem::update(float deltatime) {
     using namespace raylib;
     raylib::PollInputEvents();
     if(!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) // Cambio a solo tap/cooldown

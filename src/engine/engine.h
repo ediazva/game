@@ -35,11 +35,11 @@ namespace engine {
     EntityManager& entityManager(int index = 0);
     virtual void onInit() {}
     virtual void onProcessInput() {}
-    virtual void onUpdate(const float& deltatime) {}
+    virtual void onUpdate(float deltatime) {}
     virtual void onRender() {}
   private:
     void processInput();
-    void update(const float& deltatime);
+    void update(float deltatime);
     void render();
 
     // SystemManager* m_sysmgr;

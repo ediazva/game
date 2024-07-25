@@ -4,7 +4,7 @@
 #include "engine/components/animation.h"
 
 namespace engine {
-  void AnimationSystem::update(const float& deltatime) {
+  void AnimationSystem::update(float deltatime) {
     using namespace raylib;
     auto entities = entityMgr().getEntities<SpriteComponent, AnimationComponent>();
 

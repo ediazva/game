@@ -21,7 +21,7 @@ public:
     };
   }
 
-  virtual void onUpdate(const float& deltatime) override {
+  virtual void onUpdate(float deltatime) override {
     TimerManager::Tick(deltatime);
   } 
 };

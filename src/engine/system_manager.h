@@ -16,7 +16,7 @@ namespace engine {
     void addSystem(const std::shared_ptr<System>& system);
 
     void init();
-    void update(const float& deltatime);
+    void update(float deltatime);
     void render();
   };
 } // namespace engine

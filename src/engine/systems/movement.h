@@ -12,13 +12,13 @@ namespace engine {
     std::uniform_real_distribution<float> zero_2pi_dist;
 
     bool borderBounce(PositionComponent& position, VelocityComponent& velocity,
-                      const float& deltatime);
+                      float deltatime);
     void randomBounce(PositionComponent& position, VelocityComponent& velocity,
-                      const float& deltatime);
+                      float deltatime);
 
 
   public:
-    virtual void update(const float& deltatime) override;
+    virtual void update(float deltatime) override;
     MovementSystem() : eng(dev()), zero_2pi_dist(0, 2 * std::numbers::pi){};
   };
 } // namespace engine

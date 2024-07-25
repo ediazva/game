@@ -14,7 +14,7 @@ namespace engine {
    * TODO: Tomar en cuenta la hitbox del objeto/sprite
    */
   bool MovementSystem::borderBounce(PositionComponent& position,
-                                    VelocityComponent& velocity, const float& deltatime) {
+                                    VelocityComponent& velocity, float deltatime) {
 
     bool bounced = false;
     // Bordes, ????suma de threshold para que no sea tan exacto????
@@ -33,7 +33,7 @@ namespace engine {
   }
 
   void MovementSystem::randomBounce(PositionComponent& position, VelocityComponent& velocity,
-                                    const float& deltatime) {
+                                    float deltatime) {
     float radius = std::sqrt(velocity.vector.x * velocity.vector.x +
                              velocity.vector.y * velocity.vector.y),
           ang = zero_2pi_dist(eng);
@@ -46,7 +46,7 @@ namespace engine {
    * *** Proximamente se puede crear un sistema especifico para patos y
    * otro para particulas(Sin bounce) ***
    */
-  void MovementSystem::update(const float& deltatime) {
+  void MovementSystem::update(float deltatime) {
     using namespace raylib;
 
     auto entidades =

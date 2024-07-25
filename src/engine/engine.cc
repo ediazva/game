@@ -79,7 +79,7 @@ namespace engine {
     onProcessInput();
   }
 
-  void Engine::update(const float& deltatime) {
+  void Engine::update(float deltatime) {
     onUpdate(deltatime);
 
     m_sysmgr->update(deltatime);

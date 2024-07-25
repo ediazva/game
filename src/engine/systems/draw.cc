@@ -7,7 +7,7 @@
 #include "raylib.h"
 
 namespace engine {
-  void DrawSystem::update(const float& deltatime) {
+  void DrawSystem::update(float deltatime) {
     using namespace raylib;
 
     ClearBackground(LIGHTGRAY);

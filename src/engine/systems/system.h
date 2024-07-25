@@ -13,7 +13,7 @@ namespace engine {
     }
 
     virtual void init() {}
-    virtual void update(const float& deltatime) {}
+    virtual void update(float deltatime) {}
     virtual void render() {}
   };
 } // namespace engine

@@ -12,7 +12,7 @@ namespace engine {
       s->init();
   }
 
-  void SystemManager::update(const float& deltatime) {
+  void SystemManager::update(float deltatime) {
     for(auto& s : m_systems)
       s->update(deltatime);
   }

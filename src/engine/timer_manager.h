@@ -11,6 +11,6 @@ namespace engine {
   public:
     /// Seconds
     static std::function<TimerResult()>& AddTimer(float delay);
-    static void Tick(const float& deltatime);
+    static void Tick(float deltatime);
   };
 } // namespace engine
