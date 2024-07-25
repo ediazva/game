@@ -1,33 +1,31 @@
 #pragma once
-namespace engine {
-  class Engine;
-} // namespace engine
+#include "engine/debug.h"
 
-/// Se necesita que se defina un destructor
-#define CREATE_RAYLIB_WRAPPER(classname, type, fn_deleter, fn_valid) \
-  struct classname : type {                                          \
-    classname() = default;                                           \
-    classname(classname&& o) {                                       \
-      copy_base(o);                                                  \
-      o.copy_base({});                                               \
-    }                                                                \
-    classname(const classname&) = delete;                            \
-    ~classname() {                                                   \
-      fn_deleter(*this);                                             \
-    }                                                                \
-    bool isValid() const {                                           \
-      return fn_valid(*this);                                        \
-    }                                                                \
-    classname& operator=(const classname&) = delete;                 \
-    classname& operator=(classname&& o) {                            \
-      copy_base(o);                                                  \
-      o.copy_base({});                                               \
-      return *this;                                                  \
-    }                                                                \
-  private:                                                           \
-    void copy_base(const type& base) {                               \
-      type::operator=(base);                                         \
-    }                                                                \
-    friend class engine::Engine;                                     \
-  };
-  
+template<typename T, void (*FnDeleter)(T), bool (*FnValid)(T)>
+struct raylib_wrapper : T {
+  raylib_wrapper() = default;
+  raylib_wrapper(raylib_wrapper&& o) {
+    copy_base(o);
+    o.copy_base({});
+  }
+  raylib_wrapper(const raylib_wrapper&) = delete;
+  ~raylib_wrapper() {
+    if(isValid())
+      FnDeleter(*this);
+  }
+
+  bool isValid() const {
+    return FnValid(*this);
+  }
+
+  raylib_wrapper& operator=(const raylib_wrapper&) = delete;
+  raylib_wrapper& operator=(raylib_wrapper&& o) {
+    copy_base(o);
+    o.copy_base({});
+    return *this;
+  } 
+protected:
+  void copy_base(const T& base) {
+    T::operator=(base);
+  }
+};

@@ -13,6 +13,7 @@ add_library(engine-lib STATIC
   engine/engine.cc
   engine/timer_manager.cc
   engine/debug.cc
+  engine/level.cc
   engine/system_manager.cc
   engine/systems/draw.cc
   engine/systems/movement.cc
@@ -23,5 +24,9 @@ add_library(engine-lib STATIC
 target_link_libraries(engine-lib raylib)
 target_compile_definitions(engine-lib PUBLIC ${GAME_FLAGS})
 
-add_executable(game game/main.cc)
+add_executable(game
+  game/main.cc
+  game/app.cc
+  game/level0.cc
+  game/level1.cc)
 target_link_libraries(game engine-lib)

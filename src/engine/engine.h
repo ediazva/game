@@ -1,12 +1,11 @@
 #pragma once
+#include "engine/level.h"
 
-#include <array>
 #include <memory>
 #include <vector>
 
 namespace engine {
-  class SystemManager;
-  class EntityManager;
+  class Level;
 
   namespace assets {
     struct Sound;
@@ -16,35 +15,39 @@ namespace engine {
 
   class Engine {
   public:
-    Engine(const char* title, unsigned w, unsigned h, int fps = -1, int nEntMgr = 1);
+    Engine(const char* title, unsigned w, unsigned h, int fps = -1);
     ~Engine();
-
-    // ================
-    // ASSETS CREATION
-    // ================
-    assets::Sound makeSoundFromPath(const char* path);
-    assets::Texture makeTextureFromPath(const char* path);
-    // assets::Tile makeTileFromPath(const char* path, Result* res = nullptr);
 
     // ================
     // MAIN FUNCTIONS
     // ================
     void run();
   protected:
-    SystemManager& systemManager();
-    EntityManager& entityManager(int index = 0);
+    // SystemManager& systemManager();
+    // EntityManager& entityManager(int index = 0);
     virtual void onInit() {}
     virtual void onProcessInput() {}
     virtual void onUpdate(float deltatime) {}
     virtual void onRender() {}
+    
+    template<level_t T, typename... Args>
+    T* addLevel(Args&&... args) {
+      T* level = new T(std::forward<Args>(args)...);
+      m_levels.emplace_back(level);
+      if(!m_currentLevel) changeToLevel(level->id());
+      return level;
+    }
+
+    void changeToLevel(LevelID id);
+
+    Level* currentLevel() {return m_currentLevel;}
   private:
     void processInput();
     void update(float deltatime);
     void render();
 
-    // SystemManager* m_sysmgr;
-    // EntityManager* m_entmgr;
-    std::unique_ptr<SystemManager> m_sysmgr;
-    std::vector<std::unique_ptr<EntityManager>> m_entmgrs;
+    Level* m_currentLevel;
+    // TODO: Podemos usar una tabla hash pero al final solo son 3 niveles
+    std::vector<std::unique_ptr<Level>> m_levels;
   };
 } // namespace engine

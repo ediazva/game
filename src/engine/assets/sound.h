@@ -3,5 +3,10 @@
 #include "engine/assets/priv/raylib_wrapper.h"
 
 namespace engine::assets {
-  CREATE_RAYLIB_WRAPPER(Sound, raylib::Sound, raylib::UnloadSound, raylib::IsSoundReady)
+  struct Sound : raylib_wrapper<raylib::Sound, raylib::UnloadSound, raylib::IsSoundReady> {
+    static Sound MakeFromPath(const char* path) {
+      // FIXME: Agregar algo acá
+      return {};
+    }
+  };
 } // namespace engine::assets

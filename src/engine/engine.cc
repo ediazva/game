@@ -2,47 +2,23 @@
 
 #include "engine/debug.h"
 #include "engine/raylib.h"
-#include "engine/entity_manager.h"
-#include "engine/system_manager.h"
 #include "engine/assets/sound.h"
 #include "engine/assets/texture.h"
-#include <memory>
 
 namespace engine {
-  Engine::Engine(const char* title, unsigned w, unsigned h, int fps, int nEntMgr) : m_sysmgr{ std::make_unique<SystemManager>() } {
-
-    for(int i{}; i < nEntMgr; ++i) {
-      m_entmgrs.push_back(std::make_unique<EntityManager>());
-    }
-
+  Engine::Engine(const char* title, unsigned w, unsigned h, int fps) :
+    m_currentLevel{} {
     raylib::InitWindow(w, h, title);
     if(fps > 0)
       raylib::SetTargetFPS(fps);
     raylib::InitAudioDevice();
 
     configure_raylib_log();
-    m_sysmgr->setDepedencies(m_entmgrs[0].get());
   }
   Engine::~Engine() {
-    // delete m_entmgr;
-    // delete m_sysmgr;
+    m_levels.clear();
     raylib::CloseAudioDevice();
     raylib::CloseWindow();
-  }
-
-  // ======================================================================
-  // ASSETS CREATION
-  // ======================================================================
-  assets::Sound Engine::makeSoundFromPath(const char* path) {
-    assets::Sound snd;
-    snd.copy_base(raylib::LoadSound(path));
-    return snd;
-  }
-
-  assets::Texture Engine::makeTextureFromPath(const char* path) {
-    assets::Texture tex;
-    tex.copy_base(raylib::LoadTexture(path));
-    return tex;
   }
 
   // assets::Tile Engine::makeTileFromPath(const char* path, Result* res) {
@@ -54,17 +30,26 @@ namespace engine {
   // ================
   // MAIN FUNCTIONS
   // ================
-  SystemManager& Engine::systemManager() {
-    return *m_sysmgr;
-  }
+  void Engine::changeToLevel(LevelID id) {
+    for(auto& level : m_levels) {
+      if(level->id() == id) {
+        if(m_currentLevel) m_currentLevel->destroy();
+        m_currentLevel = level.get();
+        m_currentLevel->init();
+        return;
+      }
+    }
 
-  EntityManager& Engine::entityManager(int index) {
-    return *m_entmgrs.at(index);
+    DEBUG_WARNING("Level %d don't found", id);
   }
+  // ======================================================================
 
+  // ================
+  // MAIN FUNCTIONS
+  // ================
   void Engine::run() {
     onInit();
-    m_sysmgr->init();
+    // m_sysmgr->init();
 
     while(!raylib::WindowShouldClose()) {
       processInput();
@@ -74,21 +59,18 @@ namespace engine {
   }
 
   void Engine::processInput() {
-    // raylib::PollInputEvents();
-
     onProcessInput();
   }
 
   void Engine::update(float deltatime) {
+    if(m_currentLevel) m_currentLevel->update(deltatime);
     onUpdate(deltatime);
-
-    m_sysmgr->update(deltatime);
   }
 
   void Engine::render() {
     raylib::BeginDrawing();
+    if(m_currentLevel) m_currentLevel->render();
     onRender();
-    m_sysmgr->render();
 
     raylib::EndDrawing();
   }

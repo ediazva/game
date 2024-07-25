@@ -14,7 +14,7 @@ public:
 
   void onInit() override {
     atlas.makeFromTexture(
-      makeTextureFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
+      assets::Texture::MakeFromPath("/home/phobos/Desktop/Universidad/game/data/img/sheet.png"),
       {
         .size = {16,16},
         .scale = 16.f

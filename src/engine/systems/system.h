@@ -4,7 +4,7 @@ namespace engine {
   class EntityManager;
 
   class System {
-    EntityManager* m_entityMgr;
+    EntityManager* m_entityMgr{};
   protected:
     const EntityManager& entityMgr() const { return *m_entityMgr; }
   public:
