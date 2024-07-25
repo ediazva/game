@@ -46,7 +46,7 @@ namespace engine {
       auto& text = e->getComponent<TextComponent>();
       auto& position = e->getComponent<PositionComponent>();
 
-      DrawText((text.str1 + text.str2).c_str(), position.coord.x, position.coord.x,
+      DrawText(text.str.c_str(), position.coord.x, position.coord.x,
                text.fontSize, text.color);
     }
 

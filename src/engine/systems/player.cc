@@ -6,7 +6,7 @@
 
 namespace engine {
   // Actualizamos posicion de player dependiendo del mouse
-  void PlayerSystem::update(const float& deltatime) {
+  void PlayerSystem::update(float deltatime) {
     auto entidades =
         entityMgr().getEntities<PositionComponent, ShootComponent>();
 

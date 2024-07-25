@@ -18,7 +18,7 @@ namespace engine {
    * Reset basico de coordenadas
    * ??? El reset es interno del sistema???
    */
-  void HitboxSystem::reset_entity(std::shared_ptr<Entity>& ent, float deltatime) {
+  void HitboxSystem::resetEntity(std::shared_ptr<Entity>& ent, float deltatime) {
     int rand_x = raylib::GetRandomValue(200, 1300);
     float vel = 300;
 

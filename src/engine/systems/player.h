@@ -6,7 +6,7 @@
 namespace engine {
   class PlayerSystem : public System {
   public:
-    virtual void update(const float& deltatime) override;
+    virtual void update(float deltatime) override;
     // void reset_entity(std::shared_ptr<Entity>& ent, const float& deltatime);
   };
 } // namespace engine
