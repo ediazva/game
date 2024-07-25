@@ -14,6 +14,7 @@ add_library(engine-lib STATIC
   engine/timer_manager.cc
   engine/debug.cc
   engine/level.cc
+  engine/raylib.cc
   engine/system_manager.cc
   engine/systems/draw.cc
   engine/systems/movement.cc

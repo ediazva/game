@@ -25,6 +25,10 @@ namespace engine {
     onUpdate(deltatime);
   }
 
+  void Level::processInput() {
+    onProcessInput();
+  }
+
   void Level::render() {
     m_sysMgr.render();
     onRender();

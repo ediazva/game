@@ -60,6 +60,7 @@ namespace engine {
 
   void Engine::processInput() {
     onProcessInput();
+    if(m_currentLevel) m_currentLevel->processInput();
   }
 
   void Engine::update(float deltatime) {

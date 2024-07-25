@@ -14,12 +14,14 @@ namespace engine {
   protected:
     virtual void onInit() {}
     virtual void onUpdate(float deltatime) {}
+    virtual void onProcessInput() {}
     virtual void onRender() {}
   public:
     Level();
     virtual ~Level();
     void init();
     void destroy();
+    void processInput();
     void update(float deltatime);
     void render();
     auto&& entityManager(this auto&& self) {return self.m_entMgr;}
