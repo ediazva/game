@@ -67,7 +67,7 @@ namespace engine {
 
       position.coord.x += (velocity.vector.x) * deltatime;
       position.coord.y += (velocity.vector.y) * deltatime;
-      bounce.cooldown -= 10;
+      bounce.cooldown -= 500 * deltatime;
     }
   }
 } // namespace engine
