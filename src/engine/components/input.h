@@ -4,10 +4,9 @@
 
 namespace engine {
   /* Componente que determina si esta entidad es
-   * afectada por el input de un usuario
+   * afectada por el mouse de un usuario
    */
   struct InputComponent : public Component {
-
     InputComponent() = default;
   };
 } // namespace engine

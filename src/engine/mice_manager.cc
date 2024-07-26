@@ -1,11 +1,11 @@
 #include "engine/mice_manager.h"
 
+#include "engine/raylib.h"
+
 #include <li.h>
 #include <thread>
 #include <map>
 #include <charconv>
-
-#include <print>
 
 namespace engine {
   bool EventCompare::operator()(const std::string& a, const std::string& b) const {
@@ -16,27 +16,39 @@ namespace engine {
     return numA < numB;
   }
 
-  struct MiceManager::Impl {
-    std::map<std::string, Mouse, EventCompare>& m_mice;
+  struct SingleType : public MiceManager::Type {
+    SingleType(MiceManager::MouseList& list) :
+      Type(list) {
+        list["default"] = {};
+      }
+    ~SingleType() {}
+
+    virtual void update() override {
+      listRef["default"].x = raylib::GetMouseX();
+      listRef["default"].y = raylib::GetMouseY();
+    }
+  };
+  
+  struct MultipleType : public MiceManager::Type {
     std::shared_ptr<li::LibInput> m_li;
     std::thread m_miceThread;
     
-    Impl(auto& mice) :
-      m_mice(mice),
+    MultipleType(MiceManager::MouseList& list) :
+      Type(list),
       m_li{li::LibInput::MakeFromUDev()} {
       m_li->onDeviceAdded = [this](li::DeviceEvent ev) {
         if(ev.type == ev.kPointer_Type)
-          m_mice[ev.sysname] = {};
+          listRef[ev.sysname] = {};
       };
       m_li->onDeviceRemoved = [this](li::DeviceEvent ev) {
-        if(m_mice.contains(ev.sysname))
-          m_mice.erase(ev.sysname);
+        if(listRef.contains(ev.sysname))
+          listRef.erase(ev.sysname);
       };
       m_li->onPointerMotion = [this](li::PointerMotionEvent ev) {
-        if(m_mice.contains(ev.sysname)) {
+        if(listRef.contains(ev.sysname)) {
 
-          m_mice[ev.sysname].x += ev.x;
-          m_mice[ev.sysname].y += ev.y;
+          listRef[ev.sysname].x += ev.x;
+          listRef[ev.sysname].y += ev.y;
         }
       };
 
@@ -45,16 +57,35 @@ namespace engine {
       });
     }
 
-    ~Impl() {
+    ~MultipleType() {
       m_li->stopWaitEvents();
       m_miceThread.join();
     }
+
+    virtual void update() override {}
   };
 
   MiceManager::MiceManager() :
-    m_impl{new Impl(m_mice)} {}
-  MiceManager::~MiceManager() {
-    delete m_impl;
+    m_type{new SingleType(m_mice)},
+    m_multiple{} {}
+  MiceManager::~MiceManager() {}
+
+  void MiceManager::enableMultipleMouse() {
+    if(!m_multiple) {
+      m_multiple = true;
+      m_type.reset(new MultipleType(m_mice));
+    }
+  }
+
+  void MiceManager::disableMultipleMouse() {
+    if(m_multiple) {
+      m_multiple = false;
+      m_type.reset(new SingleType(m_mice));
+    }
+  }
+
+  void MiceManager::update() {
+    m_type->update();
   }
 
   MiceManager& MiceManager::GetInstance() {

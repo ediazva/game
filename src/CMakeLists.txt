@@ -15,12 +15,14 @@ add_library(engine-lib STATIC
   engine/debug.cc
   engine/level.cc
   engine/raylib.cc
+  engine/mice_manager.cc
   engine/system_manager.cc
   engine/systems/draw.cc
+  engine/systems/input.cc
   engine/systems/movement.cc
   engine/systems/hitbox.cc
   engine/systems/animation.cc
-  engine/systems/player.cc
+  engine/systems/shoot.cc
   engine/assets/texture_atlas.cc
 )
 
@@ -29,7 +31,7 @@ if(WIN32)
   list(APPEND ENGINE_LIBS Winmm.lib)
 endif()
 
-target_link_libraries(engine-lib ${ENGINE_LIBS})
+target_link_libraries(engine-lib mice-lib ${ENGINE_LIBS})
 target_compile_definitions(engine-lib PUBLIC ${GAME_FLAGS})
 
 add_executable(game

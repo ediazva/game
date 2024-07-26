@@ -24,7 +24,8 @@
 
 #include <functional>
 #include <iostream>
-#include "engine/systems/player.h"
+#include "engine/systems/shoot.h"
+#include "engine/systems/input.h"
 #include "raylib.h"
 #include <memory>
 #include <string>
@@ -109,7 +110,7 @@ class Level2 : public Level {
     systemManager().addSystem(std::make_shared<MovementSystem>());
     systemManager().addSystem(std::make_shared<HitboxSystem>());
     systemManager().addSystem(std::make_shared<AnimationSystem>());
-    systemManager().addSystem(std::make_shared<PlayerSystem>());
+    systemManager().addSystem(std::make_shared<ShootSystem>());
 
     resetEntities();
   }

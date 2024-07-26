@@ -4,11 +4,13 @@
 #include "level1.h"
 #include "raylib.h"
 
+#include "engine/mice_manager.h"
+
 namespace game {
   App::App() : engine::Engine("Django Sin Palomas", 1200, 600, 60) {}
 
   void App::onInit() {
-    raylib::HideCursor();
+    raylib::DisableCursor();
     m_main = addLevel<Level1>();
     music = raylib::LoadMusicStream("data/songs/prision.wav");
 
