@@ -16,13 +16,13 @@ namespace engine {
   }
 
   void Level::init() {
-    m_sysMgr.init();
     onInit();
+    m_sysMgr.init();
   }
 
   void Level::update(float deltatime) {
-    m_sysMgr.update(deltatime);
     onUpdate(deltatime);
+    m_sysMgr.update(deltatime);
   }
 
   void Level::processInput() {
@@ -30,8 +30,8 @@ namespace engine {
   }
 
   void Level::render() {
-    m_sysMgr.render();
     onRender();
+    m_sysMgr.render();
   }
 
   void Level::destroy() {

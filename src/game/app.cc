@@ -8,7 +8,7 @@ namespace game {
     engine::Engine("Django Sin Palomas", 1200, 600, 60) {}
 
   void App::onInit() {
-    raylib::HideCursor();
+    // raylib::HideCursor();
     m_main = addLevel<Level1>();
     m_menu = addLevel<Level0>();
   }

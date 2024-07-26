@@ -9,8 +9,8 @@ namespace engine {
   struct ShootComponent : public Component {
     float shootCooldown{},
         maxShootCooldown = 5.f;
-    int bullets{ 3 }, maxBullets = 3;
+    unsigned maxBullets, bullets{ maxBullets };
 
-    ShootComponent() = default;
+    ShootComponent(unsigned maxBullets) : maxBullets(maxBullets){};
   };
 } // namespace engine

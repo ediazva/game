@@ -12,6 +12,8 @@ namespace engine {
   struct SpriteComponent : public Component {
     // assets::TextureAtlas& atlas;
     // unsigned atlIdx{};
+    float height;
+    float width;
     raylib::Vector2 offset{};
 
     std::string currentState;

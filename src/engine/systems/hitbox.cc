@@ -16,67 +16,70 @@ namespace engine {
   void HitboxSystem::update(float deltatime) {
     using namespace raylib;
 
-    if (!IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if(!IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
       return;
 
     auto players = entityMgr().getEntities<ShootComponent>();
-    if (players.empty())
-      return;
+    for(auto& player : entityMgr().getEntities<ShootComponent>()) {
+      auto& shoot = player->getComponent<ShootComponent>();
 
-    auto player = players.at(0);
-    auto& shoot = player->getComponent<ShootComponent>();
+      if(shoot.bullets <= 0 || shoot.shootCooldown > 0)
+        return;
 
-    if (shoot.bullets <= 0 || shoot.shootCooldown > 0)
-      return;
+      player->onClick();
+      // shoot.bullets--;
+      // shoot.shootCooldown = shoot.maxShootCooldown;
 
-    shoot.bullets--;
-    shoot.shootCooldown = shoot.maxShootCooldown;
+      auto hittableEntities = entityMgr().getEntities<PositionComponent, HitboxComponent, AnimationComponent, SpriteComponent, VelocityComponent>();
 
-    auto hittableEntities = entityMgr().getEntities<PositionComponent, HitboxComponent, AnimationComponent, SpriteComponent, VelocityComponent>();
+      std::vector<std::pair<Entity*, Entity*>> collisions;
 
-    std::vector<std::pair<Entity*, Entity*>> collisions;
+      for(auto& e : hittableEntities) {
+        auto& position = e->getComponent<PositionComponent>();
+        auto& sprite = e->getComponent<SpriteComponent>();
+        auto& hitbox = e->getComponent<HitboxComponent>();
+        auto& animation = e->getComponent<AnimationComponent>();
+        auto& velocity = e->getComponent<VelocityComponent>();
 
-    for (auto& e : hittableEntities) {
-      auto& position = e->getComponent<PositionComponent>();
-      auto& sprite = e->getComponent<SpriteComponent>();
-      auto& hitbox = e->getComponent<HitboxComponent>();
-      auto& animation = e->getComponent<AnimationComponent>();
-      auto& velocity = e->getComponent<VelocityComponent>();
+        auto& playerPosition = player->getComponent<PositionComponent>();
+        auto playerX = playerPosition.coord.x;
+        auto playerY = playerPosition.coord.y;
 
-      auto& playerPosition = player->getComponent<PositionComponent>();
-      auto playerX = playerPosition.coord.x;
-      auto playerY = playerPosition.coord.y;
+        float halfWidth = hitbox.width / 2.0f;
+        float halfHeight = hitbox.height / 2.0f;
 
-      float halfWidth = hitbox.width / 2.0f;
-      float halfHeight = hitbox.height / 2.0f; 
+        float hitboxCenterX = position.coord.x + sprite.width / 2.0f;
+        float hitboxCenterY = position.coord.y + sprite.height / 2.0f;
 
-      bool isColliding = playerX >= (position.coord.x - halfWidth) &&
-                          playerX <= (position.coord.x + halfWidth) &&
-                          playerY >= (position.coord.y - halfHeight) &&
-                          playerY <= (position.coord.y + halfHeight);
+        bool isColliding = playerX >= (hitboxCenterX - halfWidth) &&
+                           playerX <= (hitboxCenterX + halfWidth) &&
+                           playerY >= (hitboxCenterY - halfHeight) &&
+                           playerY <= (hitboxCenterY + halfHeight);
 
-      bool previouslyColliding = collisionStates[e.get()];
+        bool previouslyColliding = collisionStates[e.get()];
 
-      if (isColliding) {
-        if (!previouslyColliding) {
-          if (hitbox.onCollisionEnter) {
-            hitbox.onCollisionEnter();
+        if(isColliding) {
+          if(!previouslyColliding) {
+            if(hitbox.onCollisionEnter) {
+              hitbox.onCollisionEnter();
+            }
+            handleCollisionEnter(*player, *e);
+            e->onClick();
+            collisionStates[e.get()] = true;
+          } else {
+            if(hitbox.onCollision) {
+              hitbox.onCollision();
+            }
+            handleCollisionStay(*player, *e);
           }
-          handleCollisionEnter(*player, *e);
-          collisionStates[e.get()] = true;
         } else {
-          if (hitbox.onCollision) {
-            hitbox.onCollision();
+          if(previouslyColliding) {
+            if(hitbox.onCollisionExit) {
+              hitbox.onCollisionExit();
+            }
+            handleCollisionExit(*player, *e);
+            collisionStates[e.get()] = false;
           }
-          handleCollisionStay(*player, *e);
-        }
-      } else {
-        if (previouslyColliding) {
-          if (hitbox.onCollisionExit) {
-            hitbox.onCollisionExit();
-          }
-          handleCollisionExit(*player, *e);
-          collisionStates[e.get()] = false;
         }
       }
     }
@@ -88,7 +91,7 @@ namespace engine {
 
     ent->getComponent<PositionComponent>().coord = { (float)rand_x, 1000 };
 
-    if (rand_x < 500) {
+    if(rand_x < 500) {
       ent->getComponent<VelocityComponent>().vector = { vel, -vel };
     } else {
       ent->getComponent<VelocityComponent>().vector = { -vel, -vel };
@@ -108,19 +111,19 @@ namespace engine {
   }
 
   void HitboxSystem::handleCollisionEnter(Entity& entity1, Entity& entity2) {
-    if (onCollisionEnterCallback) {
+    if(onCollisionEnterCallback) {
       onCollisionEnterCallback(entity1, entity2);
     }
   }
 
   void HitboxSystem::handleCollisionStay(Entity& entity1, Entity& entity2) {
-    if (onCollisionStayCallback) {
+    if(onCollisionStayCallback) {
       onCollisionStayCallback(entity1, entity2);
     }
   }
 
   void HitboxSystem::handleCollisionExit(Entity& entity1, Entity& entity2) {
-    if (onCollisionExitCallback) {
+    if(onCollisionExitCallback) {
       onCollisionExitCallback(entity1, entity2);
     }
   }

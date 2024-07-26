@@ -1,10 +1,8 @@
 #include "engine/engine.h"
 
 #include "engine/debug.h"
+#include "engine/timer_manager.h"
 #include "engine/raylib.h"
-#include "engine/assets/sound.h"
-#include "engine/assets/texture.h"
-
 namespace engine {
   Engine::Engine(const char* title, unsigned w, unsigned h, int fps) :
     m_currentLevel{} {
@@ -64,14 +62,15 @@ namespace engine {
   }
 
   void Engine::update(float deltatime) {
+    TimerManager::Tick(deltatime);
     if(m_currentLevel) m_currentLevel->update(deltatime);
     onUpdate(deltatime);
   }
 
   void Engine::render() {
     raylib::BeginDrawing();
-    if(m_currentLevel) m_currentLevel->render();
     onRender();
+    if(m_currentLevel) m_currentLevel->render();
 
     raylib::EndDrawing();
   }
