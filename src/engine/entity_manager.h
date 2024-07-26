@@ -1,6 +1,8 @@
 #pragma once
 #include "engine/entity.h"
 
+#include <ranges>
+
 namespace engine {
   class EntityManager {
     std::vector<EntityPtr> m_pool{};
@@ -11,13 +13,8 @@ namespace engine {
     }
 
     template <component_t... T>
-    std::vector<EntityPtr> getEntities() const {
-      std::vector<EntityPtr> res;
-      for(auto& e : m_pool)
-        if(e->hasComponent<T...>())
-          res.push_back(e);
-
-      return res;
+    auto getEntities(this auto&& self) {
+      return self.m_pool | std::views::filter([](auto& x) {return x->template hasComponent<T...>();});
     }
 
     const std::vector<EntityPtr>& getEntities() const {

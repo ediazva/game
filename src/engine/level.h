@@ -30,8 +30,8 @@ namespace engine {
 #else
     const auto& entityManager() const {return m_entMgr;}
     auto& entityManager() {return m_entMgr;}
-    const auto& systemManager() const {return self.m_sysMgr;}
-    auto& systemManager() {return self.m_sysMgr;}
+    const auto& systemManager() const {return m_sysMgr;}
+    auto& systemManager() {return m_sysMgr;}
 #endif
     LevelID id() const;
   };
