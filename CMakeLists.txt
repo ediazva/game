@@ -17,3 +17,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 add_subdirectory(src)
 add_subdirectory(tests)
+
+file(COPY data DESTINATION ${CMAKE_BINARY_DIR}/src)
+file(COPY data DESTINATION ${CMAKE_BINARY_DIR}/tests)
+

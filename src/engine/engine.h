@@ -29,18 +29,19 @@ namespace engine {
     virtual void onProcessInput() {}
     virtual void onUpdate(float deltatime) {}
     virtual void onRender() {}
-    
-    template<level_t T, typename... Args>
+
+    template <level_t T, typename... Args>
     T* addLevel(Args&&... args) {
       T* level = new T(std::forward<Args>(args)...);
       m_levels.emplace_back(level);
-      if(!m_currentLevel) changeToLevel(level->id());
+      if(!m_currentLevel)
+        changeToLevel(level->id());
       return level;
     }
 
     void changeToLevel(LevelID id);
 
-    Level* currentLevel() {return m_currentLevel;}
+    Level* currentLevel() { return m_currentLevel; }
   private:
     void processInput();
     void update(float deltatime);

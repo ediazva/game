@@ -1,7 +1,7 @@
 #pragma once
 #include "engine/components/component.h"
 #include "engine/debug.h"
-
+#include <functional>
 #include <memory>
 #include <vector>
 #include <cassert>
@@ -12,6 +12,9 @@ namespace engine {
     Component::Bitset m_componentFlags{};
     std::vector<ComponentPtr> m_components{};
   public:
+
+    std::function<void()> onClick = []() {};
+
     template <component_t T, typename... Args>
     T& addComponent(Args&&... args) {
       if(hasComponent<T>()) {
