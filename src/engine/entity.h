@@ -12,7 +12,6 @@ namespace engine {
     Component::Bitset m_componentFlags{};
     std::vector<ComponentPtr> m_components{};
   public:
-
     std::function<void()> onClick = []() {};
 
     template <component_t T, typename... Args>

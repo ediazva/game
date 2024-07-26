@@ -4,7 +4,8 @@
 #include "engine/systems/draw.h"
 #include "engine/systems/hitbox.h"
 #include "engine/systems/animation.h"
-#include "engine/systems/player.h"
+#include "engine/systems/shoot.h"
+#include "engine/systems/input.h"
 
 #include "engine/components/sprite.h"
 #include "engine/components/position.h"
@@ -13,79 +14,53 @@
 #include "engine/components/shoot.h"
 #include "engine/components/hitbox.h"
 #include "engine/components/bounce.h"
+#include "engine/components/input.h"
 
 #include "engine/entity.h"
 
 #include <filesystem>
 #include <iostream>
 // #include "engine/components/velocity.h"
-
 using namespace raylib;
+
+const std::filesystem::path dataPath = std::filesystem::current_path() / "data" / "level1";
 
 namespace game {
   void Level1::onInit() {
-    // background1 = engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\background.png)");
-    // nubesAnimate = engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\nubes.png)");
-    // muro_izquierdo = engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\muro-izquierdo.png)");
-    // mi_cerro = engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\mi-cerro.png)");
-    // ventanas_estaticas = engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\ventanas-estaticas.png)");
-    // tejado = engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\tejado-humilde.png)");
-    // deco_muros = engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\deco-muro-left.png)");
-
-    std::filesystem::path dataPath = std::filesystem::current_path() / "data" / "level1";
-    std::cout << dataPath << std::endl;
-
-    background1 = engine::assets::Texture::MakeFromPath((dataPath / "background.png").c_str());
-    nubesAnimate = engine::assets::Texture::MakeFromPath((dataPath / "nubes.png").c_str());
-    muro_izquierdo = engine::assets::Texture::MakeFromPath((dataPath / "muro-izquierdo.png").c_str());
-    mi_cerro = engine::assets::Texture::MakeFromPath((dataPath / "mi-cerro.png").c_str());
-    ventanas_estaticas = engine::assets::Texture::MakeFromPath((dataPath / "ventanas-estaticas.png").c_str());
-    tejado = engine::assets::Texture::MakeFromPath((dataPath / "tejado-humilde.png").c_str());
-    deco_muros = engine::assets::Texture::MakeFromPath((dataPath / "deco-muro-left.png").c_str());
+    background1 = engine::assets::Texture::MakeFromPath(dataPath / "background.png");
+    nubesAnimate.tex = engine::assets::Texture::MakeFromPath(dataPath / "nubes.png");
+    muro_izquierdo = engine::assets::Texture::MakeFromPath(dataPath / "muro-izquierdo.png");
+    mi_cerro = engine::assets::Texture::MakeFromPath(dataPath / "mi-cerro.png");
+    ventanas_estaticas = engine::assets::Texture::MakeFromPath(dataPath / "ventanas-estaticas.png");
+    tejado = engine::assets::Texture::MakeFromPath(dataPath / "tejado-humilde.png");
+    deco_muros = engine::assets::Texture::MakeFromPath(dataPath / "deco-muro-left.png");
 
     textureAtlas["ropa-cerro"].makeFromTexture(
-        // engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\ropa-cerro.png)"),
-        engine::assets::Texture::MakeFromPath((dataPath / "ropa-cerro.png").c_str()),
+        engine::assets::Texture::MakeFromPath(dataPath / "ropa-cerro.png"),
         { .size = { 103, 60 } });
 
     textureAtlas["cocinero"].makeFromTexture(
-        // engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\cocinero.png)"),
-        engine::assets::Texture::MakeFromPath((dataPath / "cocinero.png").c_str()),
+        engine::assets::Texture::MakeFromPath(dataPath / "cocinero.png"),
         { .size = { 54, 89 } });
 
     textureAtlas["django"].makeFromTexture(
-        // engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\django.png)"),
-        engine::assets::Texture::MakeFromPath((dataPath / "django.png").c_str()),
+        engine::assets::Texture::MakeFromPath(dataPath / "django.png"),
         { .size = { 32, 36 } });
 
     textureAtlas["palomaViva"].makeFromTexture(
-        // engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\django.png)"),
-        engine::assets::Texture::MakeFromPath((dataPath / "paloma.png").c_str()),
+        engine::assets::Texture::MakeFromPath(dataPath / "paloma.png"),
         { .size = { 64, 64 } });
 
     textureAtlas["palomaMuerta"].makeFromTexture(
-        // engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\django.png)"),
-        engine::assets::Texture::MakeFromPath((dataPath / "huevo_chiquito.png").c_str()),
+        engine::assets::Texture::MakeFromPath(dataPath / "huevo_chiquito.png"),
         { .size = { 64, 64 } });
 
     textureAtlas["mira"].makeFromTexture(
-        // engine::assets::Texture::MakeFromPath(R"(C:\Users\Usuario\Desktop\game\data\level1\django.png)"),
-        engine::assets::Texture::MakeFromPath((dataPath / "mira.png").c_str()),
+        engine::assets::Texture::MakeFromPath(dataPath / "mira.png"),
         { .size = { 19, 19 } });
 
     initializeEntityManager();
     initializeSystemManager();
-    /*
-    m_background = engine::assets::Texture::MakeFromPath("/home/phobos/Desktop/Universidad/game/data/img/background.png");
-    m_background2 = engine::assets::Texture::MakeFromPath("/home/phobos/Desktop/Universidad/game/data/img/background2.png");
-    m_ladrillos = engine::assets::Texture::MakeFromPath("/home/phobos/Desktop/Universidad/game/data/img/ladrillos.png");
-    m_pisos = engine::assets::Texture::MakeFromPath("/home/phobos/Desktop/Universidad/game/data/img/pisos.png");
-    m_nubes.tex = engine::assets::Texture::MakeFromPath("/home/phobos/Desktop/Universidad/game/data/img/nubes.png");
-    m_mira.tex = engine::assets::Texture::MakeFromPath("/home/phobos/Desktop/Universidad/game/data/img/mira.png");
-    */
-
-    // ================
-    // ENTITIES
     // ================
     // m_claro = entMgr.addEntity();
     // m_claro->addComponent<engine::SpriteComponent>(
@@ -153,12 +128,20 @@ namespace game {
      * Player
      */
     auto player = entMgr.addEntity();
-
+    player->addComponent<InputComponent>();
     player->addComponent<SpriteComponent>(
         "normal", textureAtlas["mira"], 0, textureAtlas["mira"].info().size.w / 2,
         textureAtlas["mira"].info().size.h / 2);
     player->addComponent<ShootComponent>(maxBullets);
     player->addComponent<PositionComponent>(windowWidth, windowHeight);
+
+    auto player2 = entMgr.addEntity();
+    player2->addComponent<InputComponent>();
+    player2->addComponent<SpriteComponent>(
+        "normal", textureAtlas["mira"], 0, textureAtlas["mira"].info().size.w / 2,
+        textureAtlas["mira"].info().size.h / 2);
+    player2->addComponent<ShootComponent>(maxBullets);
+    player2->addComponent<PositionComponent>(windowWidth, windowHeight);
 
     // On click por ahora para contar balas
     (player.get())->onClick = std::bind([this](Entity* entityPtr) {
@@ -230,10 +213,8 @@ namespace game {
 
   void Level1::initializeEntityManager() {
     resetEntities();
-    // nubesAnimate = entMgr.addEntity();
-    // nubesAnimate->addComponent<engine::PositionComponent>(0.f,0.f);
-    // nubesAnimate->addComponent<engine::SpriteComponent>("", "nubes");
-    // nubesAnimate->addComponent<engine::AnimationComponent>("", 0, 3, 0.5);
+
+    
   }
 
   // void Update(float deltaTime) { XD
@@ -257,23 +238,19 @@ namespace game {
     sysMgr.addSystem(std::make_shared<engine::AnimationSystem>());
     sysMgr.addSystem(std::make_shared<engine::MovementSystem>());
     sysMgr.addSystem(std::make_shared<engine::HitboxSystem>());
-    sysMgr.addSystem(std::make_shared<engine::PlayerSystem>());
+    sysMgr.addSystem(std::make_shared<engine::ShootSystem>());
+    sysMgr.addSystem(std::make_shared<engine::InputSystem>());
   }
 
   void Level1::onProcessInput() {
-    /*
-    m_mira.x = GetMouseX()/SCALE - m_mira.tex.width/2.f;
-    m_mira.y = GetMouseY()/SCALE - m_mira.tex.height/2.f;
-    */
   }
 
-  // float x{};
 
   void Level1::onUpdate(float deltatime) {
     using namespace engine;
+    nubesAnimate.x -= deltatime*CLOUDS_SPEED;
+    if(nubesAnimate.x <= -nubesAnimate.tex.width) nubesAnimate.x = 0.f;
     /*
-    x -= deltatime*CLOUDS_SPEED;
-    if(x <= -m_nubes.tex.width) x = 0.f;
     */
     // Revisamos si palomas muertas
     auto entities =
@@ -293,44 +270,19 @@ namespace game {
     // TODO: Un wait
     if(vivas == 0 || bullets == 0) {
       resetEntities();
-      // TimerManager::Tick(deltatime);
     }
   }
 
   void Level1::onRender() {
     using namespace raylib;
-    // rlScalef(2.f, 2.f, 1.f);
-    DrawTextureEx(background1, { 0, 0 }, 0, 2.f, WHITE);
-    DrawTextureEx(nubesAnimate, { 0, 0 }, 0, 2.f, WHITE);
-    DrawTextureEx(mi_cerro, { 0, 0 }, 0, 2.f, WHITE);
-    DrawTextureEx(muro_izquierdo, { 0, 0 }, 0, 2.f, WHITE);
-    DrawTextureEx(deco_muros, { 0, 0 }, 0, 2.f, WHITE);
-    DrawTextureEx(ventanas_estaticas, { 0, 0 }, 0, 2.f, WHITE);
-    DrawTextureEx(tejado, { 0, 0 }, 0, 2.f, WHITE);
+    rlScalef(2.f, 2.f, 1.f);
 
-    // DrawTexture(background1, 0, 0, WHITE);
-    // DrawTexture(nubesAnimate, 0, 0, WHITE); // falta move
-    // DrawTexture(mi_cerro, 0, 0, WHITE);
-    // DrawTexture(muro_izquierdo, 0, 0, WHITE);
-    // DrawTexture(deco_muros, 0, 0, WHITE);
-    // DrawTexture(ventanas_estaticas, 0, 0, WHITE);
-    // DrawTexture(tejado, 0, 0, WHITE);
-
-    /*
-    using namespace raylib;
-    rlScalef(SCALE, SCALE, 1.f);
-    ClearBackground(BLACK);
-
-    DrawTexture(m_background, 0, 0, WHITE);
-    // Parallax effect
-    DrawTexture(m_nubes.tex, x, 0.f, WHITE);
-    DrawTexture(m_nubes.tex, m_nubes.tex.width+x, 0.f, WHITE);
-    // =====================
-    DrawTexture(m_background2, 0, 0, WHITE);
-    DrawTexture(m_pisos, 0.f, 0.f, WHITE);
-    DrawTexture(m_ladrillos, 0.f, 0.f, WHITE);
-
-    DrawTexture(m_mira.tex, m_mira.x, m_mira.y, GREEN);
-  */
+    DrawTexture(background1, 0, 0, WHITE);
+    DrawTexture(nubesAnimate.tex, 0, 0, WHITE);
+    DrawTexture(mi_cerro, 0, 0, WHITE);
+    DrawTexture(muro_izquierdo, 0, 0, WHITE);
+    DrawTexture(deco_muros, 0, 0, WHITE);
+    DrawTexture(ventanas_estaticas, 0, 0, WHITE);
+    DrawTexture(tejado, 0, 0, WHITE);
   }
 } // namespace game

@@ -9,6 +9,7 @@
 namespace game {
   // JUEGO
   class Level1 : public engine::Level {
+    static inline constexpr const float CLOUDS_SPEED = 14.f; 
     std::unordered_map<const char*, engine::assets::TextureAtlas> textureAtlas;
 
     const unsigned maxPalomasAlive = 5, maxBullets = 6;
@@ -22,33 +23,16 @@ namespace game {
     engine::assets::Texture ventanas_estaticas;
     engine::assets::Texture tejado;
     engine::assets::Texture deco_muros;
-    engine::assets::Texture nubesAnimate;
+    
+    struct {
+      float x;
+      engine::assets::Texture tex;
+    } nubesAnimate{};
 
     engine::EntityPtr ropaCerro;
     engine::EntityPtr elCocinero;
     engine::EntityPtr m_django;
-
-    /*static inline constexpr const float SCALE = 2.f;
-    static inline constexpr const float CLOUDS_SPEED = 14.f;
-    engine::assets::Texture m_background;
-    engine::assets::Texture m_background2;
-    engine::assets::Texture m_ladrillos;
-    engine::assets::Texture m_pisos;
-
-    engine::EntityPtr m_claro;
-    engine::assets::TextureAtlas m_claroAtlas;
-
-    struct {
-      float x;
-      float y;
-      engine::assets::Texture tex;
-    } m_mira{};
-
-    struct {
-      float x; // Parallax effect
-      engine::assets::Texture tex;
-    } m_nubes;*/
-
+    
     void initializeSystemManager();
     void initializeEntityManager();
 
