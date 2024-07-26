@@ -5,9 +5,10 @@
 
 namespace engine {
   class EntityManager {
-    std::vector<EntityPtr> m_pool;
+    std::vector<EntityPtr> m_pool{};
   public:
     EntityPtr& addEntity() {
+      // return m_pool.emplace_back();
       return m_pool.emplace_back(std::make_shared<Entity>());
     }
 

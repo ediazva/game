@@ -4,6 +4,6 @@
 namespace engine {
   class DrawSystem : public System {
   public:
-    virtual void update(float deltatime) override;
+    virtual void render() override;
   };
 } // namespace engine

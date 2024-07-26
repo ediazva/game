@@ -1,5 +1,9 @@
 #include "engine/systems/hitbox.h"
+#include "engine/components/animation.h"
+#include "engine/components/shoot.h"
+#include "engine/components/sprite.h"
 #include "engine/components/velocity.h"
+#include "engine/debug.h"
 #include "engine/entity_manager.h"
 #include "engine/components/position.h"
 #include "engine/components/hitbox.h"
@@ -14,7 +18,7 @@ namespace engine {
    * Reset basico de coordenadas
    * ??? El reset es interno del sistema???
    */
-  void HitboxSystem::reset_entity(std::shared_ptr<Entity>& ent, float deltatime) {
+  void HitboxSystem::resetEntity(std::shared_ptr<Entity>& ent, float deltatime) {
     int rand_x = raylib::GetRandomValue(200, 1300);
     float vel = 300;
 
@@ -35,19 +39,26 @@ namespace engine {
    */
   void HitboxSystem::update(float deltatime) {
     using namespace raylib;
-    raylib::PollInputEvents();
-    if(!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) // Cambio a solo tap/cooldown
+    // raylib::PollInputEvents();
+    if(!IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) // Cambio a solo tap/cooldown
       return;
 
     // if(IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-    //   std::cout << "Hit" << std::endl;
 
     auto mouse_pos = raylib::GetMousePosition();
     // std::cout << mouse_pos.x << " " << mouse_pos.y << std::endl;
 
     for(auto& e : entityMgr().getEntities<PositionComponent, HitboxComponent>()) {
       auto& position = e->getComponent<PositionComponent>();
+      auto& sprite = e->getComponent<SpriteComponent>();
       auto& hitbox = e->getComponent<HitboxComponent>();
+      auto& animation = e->getComponent<AnimationComponent>();
+      auto& velocity = e->getComponent<VelocityComponent>();
+
+      auto& playerPosition = player->getComponent<PositionComponent>();
+      auto& playerX = playerPosition.coord.x;
+      auto& playerY = playerPosition.coord.y;
+
       // Check si coords se encuentran dentro de hitbox
       auto x = mouse_pos.x - position.coord.x - hitbox.radius;
       auto y = mouse_pos.y - position.coord.y - hitbox.radius;

@@ -70,8 +70,8 @@ namespace engine {
 
   void Engine::render() {
     raylib::BeginDrawing();
-    if(m_currentLevel) m_currentLevel->render();
     onRender();
+    if(m_currentLevel) m_currentLevel->render();
 
     raylib::EndDrawing();
   }

@@ -7,8 +7,9 @@ namespace engine {
    * y las balas restantes
    */
   struct ShootComponent : public Component {
-    float shoot_cooldown{};
-    int bullets{ 3 };
+    float shootCooldown{},
+        maxShootCooldown = 5.f;
+    int bullets{ 3 }, maxBullets = 3;
 
     ShootComponent() = default;
   };
