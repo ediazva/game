@@ -2,8 +2,8 @@
 
 int main() {
   {
-  game::App app;
-  app.run();
+    game::App app;
+    app.run();
   }
 
   return 0;

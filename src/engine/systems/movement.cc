@@ -5,6 +5,7 @@
 #include "engine/assets/texture.h"
 #include "engine/components/position.h"
 #include "engine/components/velocity.h"
+#include "raylib.h"
 #include <cmath>
 
 #include <iostream>
@@ -20,13 +21,13 @@ namespace engine {
     bool bounced = false;
     // Bordes, ????suma de threshold para que no sea tan exacto????
     if(position.coord.x + velocity.vector.x * deltatime < 0 ||
-       position.coord.x + velocity.vector.x * deltatime > 1500) {
+       position.coord.x + velocity.vector.x * deltatime > raylib::GetScreenWidth()) {
       velocity.vector.x *= -1;
       bounced = true;
     }
 
     if(position.coord.y + velocity.vector.y * deltatime < 0 ||
-       position.coord.y + velocity.vector.y * deltatime > 1000) {
+       position.coord.y + velocity.vector.y * deltatime > raylib::GetScreenHeight()) {
       velocity.vector.y *= -1;
       bounced = true;
     }

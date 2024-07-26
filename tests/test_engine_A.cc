@@ -193,7 +193,8 @@ class Level2 : public Level {
           raylib::GetRandomValue(
               0, windowHeight / 10));
       ptr_ent->addComponent<HitboxComponent>(64, 64);
-      ptr_ent->addComponent<VelocityComponent>(-300, -300);
+      // ptr_ent->addComponent<VelocityComponent>(-300, -300);
+      ptr_ent->addComponent<VelocityComponent>(0, 0);
       ptr_ent->addComponent<BounceComponent>();
       ptr_ent->addComponent<AnimationComponent>("viva", 0, atlases[PalomaVolando].nrects() - 1);
       ptr_ent->getComponent<AnimationComponent>().addState(
