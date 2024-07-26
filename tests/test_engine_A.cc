@@ -37,11 +37,11 @@ public:
 
   virtual void onInit() override {
     DEBUG_TRACE("Level1 loaded");
-    atlases.emplace_back(engine::assets::Texture::MakeFromPath("data/img/paloma.png"),
+    atlases.emplace_back(engine::assets::Texture::MakeFromPath("/home/user/Documentos/CC2_TIF/game/data/img/paloma.png"),
                          assets::TextureAtlas::Info{ .size = { 64, 64 } });
-    atlases.emplace_back(engine::assets::Texture::MakeFromPath("data/img/huevo_chiquito.png"),
+    atlases.emplace_back(engine::assets::Texture::MakeFromPath("/home/user/Documentos/CC2_TIF/game/data/img/huevo_chiquito.png"),
                          assets::TextureAtlas::Info{ .size = { 64, 64 } });
-    atlases.emplace_back(engine::assets::Texture::MakeFromPath("data/img/crosshair.png"),
+    atlases.emplace_back(engine::assets::Texture::MakeFromPath("/home/user/Documentos/CC2_TIF/game/data/img/crosshair.png"),
                          assets::TextureAtlas::Info{ .size = { 32, 32 }, .scale = 2. });
 
     systemManager().addSystem(std::make_shared<DrawSystem>());
@@ -82,11 +82,11 @@ class Level2 : public Level {
   };
   virtual void onInit() override {
     DEBUG_TRACE("Level2 loaded");
-    atlases.emplace_back(engine::assets::Texture::MakeFromPath("data/img/paloma.png"),
+    atlases.emplace_back(engine::assets::Texture::MakeFromPath("/home/user/Documentos/CC2_TIF/game/data/img/paloma.png"),
                          assets::TextureAtlas::Info{ .size = { 64, 64 } });
-    atlases.emplace_back(engine::assets::Texture::MakeFromPath("data/img/huevo_chiquito.png"),
+    atlases.emplace_back(engine::assets::Texture::MakeFromPath("/home/user/Documentos/CC2_TIF/game/data/img/huevo_chiquito.png"),
                          assets::TextureAtlas::Info{ .size = { 64, 64 } });
-    atlases.emplace_back(engine::assets::Texture::MakeFromPath("data/img/crosshair.png"),
+    atlases.emplace_back(engine::assets::Texture::MakeFromPath("/home/user/Documentos/CC2_TIF/game/data/img/crosshair.png"),
                          assets::TextureAtlas::Info{ .size = { 32, 32 }, .scale = 2. });
 
     systemManager().addSystem(std::make_shared<DrawSystem>());
