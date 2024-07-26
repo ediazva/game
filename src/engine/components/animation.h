@@ -17,13 +17,14 @@ namespace engine {
   // El componente de animacion tiene estados
   // El cambio de visual se tiene que dar en SpriteComponent
   struct AnimationComponent : public Component {
-    float animationSpeed{ .03 };
+    float animationSpeed{};
     unsigned currentFrame{};
     std::string currentState{};
     std::unordered_map<std::string, std::vector<AnimationFrame>> stateMap{};
 
-    AnimationComponent(std::string currentState, unsigned spriteIndexStart, unsigned spriteIndexEnd)
-        : currentState{ currentState } {
+    AnimationComponent(std::string currentState, unsigned spriteIndexStart, unsigned spriteIndexEnd, float animationSpeed = 0.03)
+        : currentState{ currentState },
+          animationSpeed{animationSpeed} {
       stateMap.insert(std::make_pair(currentState, std::vector<AnimationFrame>()));
       for(unsigned i{ spriteIndexStart }; i <= spriteIndexEnd; ++i) {
         stateMap[currentState].emplace_back(i);

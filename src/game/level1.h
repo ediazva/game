@@ -11,12 +11,16 @@ namespace game {
     std::unordered_map<const char*, engine::assets::TextureAtlas> textureAtlas;
     
     engine::assets::Texture background1;
-    engine::assets::Texture nubes;
     engine::assets::Texture muro_izquierdo;
     engine::assets::Texture mi_cerro;
+    engine::assets::Texture ventanas_estaticas;
+    engine::assets::Texture tejado;
+    engine::assets::Texture deco_muros;
+    engine::assets::Texture nubesAnimate;
 
     engine::EntityPtr ropaCerro;
-    // 103x60
+    engine::EntityPtr elCocinero;
+    engine::EntityPtr m_django;
     
     /*static inline constexpr const float SCALE = 2.f; 
     static inline constexpr const float CLOUDS_SPEED = 14.f; 
