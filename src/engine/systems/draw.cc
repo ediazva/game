@@ -12,8 +12,7 @@ namespace engine {
 
     ClearBackground(LIGHTGRAY);
 
-    auto comps = entityMgr().getEntities<SpriteComponent, PositionComponent>();
-    for(auto& e : comps) {
+    for(auto& e : entityMgr().getEntities<SpriteComponent, PositionComponent>()) {
       auto& sprite = e->getComponent<SpriteComponent>();
       auto& position = e->getComponent<PositionComponent>();
 
@@ -35,8 +34,7 @@ namespace engine {
     }
 
     // Identidades que contienen un texto
-    comps = entityMgr().getEntities<TextComponent, PositionComponent>();
-    for(auto& e : comps) {
+    for(auto& e : entityMgr().getEntities<TextComponent, PositionComponent>()) {
       auto& text = e->getComponent<TextComponent>();
       auto& position = e->getComponent<PositionComponent>();
 

@@ -42,11 +42,10 @@ namespace engine {
     // if(IsMouseButtonDown(MOUSE_BUTTON_LEFT))
     //   std::cout << "Hit" << std::endl;
 
-    auto entities = entityMgr().getEntities<PositionComponent, HitboxComponent>();
     auto mouse_pos = raylib::GetMousePosition();
     // std::cout << mouse_pos.x << " " << mouse_pos.y << std::endl;
 
-    for(auto& e : entities) {
+    for(auto& e : entityMgr().getEntities<PositionComponent, HitboxComponent>()) {
       auto& position = e->getComponent<PositionComponent>();
       auto& hitbox = e->getComponent<HitboxComponent>();
       // Check si coords se encuentran dentro de hitbox
@@ -59,6 +58,7 @@ namespace engine {
         // onCollisionEnter(e)
         // onCollision(e)
         // onCollisionLeave(e)
+        
         reset_entity(e, deltatime);
       }
     }
