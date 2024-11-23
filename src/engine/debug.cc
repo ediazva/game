@@ -1,11 +1,13 @@
 #include "engine/debug.h"
 
+#include <raylib.h>
+
 namespace engine {
   void configure_raylib_log() {
 #ifndef GAME_DEBUG
-    raylib::SetTraceLogLevel(raylib::LOG_NONE);
+    ::SetTraceLogLevel(::LOG_NONE);
 #else
-    raylib::SetTraceLogLevel(raylib::LOG_ALL);
+    ::SetTraceLogLevel(::LOG_ALL);
 #endif
   }
 } // namespace engine

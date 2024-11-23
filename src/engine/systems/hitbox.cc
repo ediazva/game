@@ -14,7 +14,7 @@
 namespace engine {
 
   void HitboxSystem::update(float deltatime) {
-    using namespace raylib;
+    
 
     if(!IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
       return;
@@ -86,7 +86,7 @@ namespace engine {
   }
 
   void HitboxSystem::resetEntity(std::shared_ptr<Entity>& ent, float deltatime) {
-    int rand_x = raylib::GetRandomValue(200, 1300);
+    int rand_x = ::GetRandomValue(200, 1300);
     float vel = 300;
 
     ent->getComponent<PositionComponent>().coord = { (float)rand_x, 1000 };

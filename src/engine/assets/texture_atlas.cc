@@ -27,7 +27,7 @@ namespace engine::assets {
     m_rects.reserve(nrows * ncols);
     for(unsigned i = 0; i < nrows; ++i) {
       for(unsigned j = 0; j < ncols; ++j) {
-        m_rects.push_back(raylib::Vector2(j * info.size.w, i * info.size.h));
+        m_rects.push_back(::Vector2(j * info.size.w, i * info.size.h));
       }
     }
     DEBUG_TRACE("[TextureAtlas] #rects=%zu", m_rects.size());

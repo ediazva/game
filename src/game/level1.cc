@@ -21,7 +21,7 @@
 #include <filesystem>
 #include <iostream>
 // #include "engine/components/velocity.h"
-using namespace raylib;
+
 
 const std::filesystem::path dataPath = std::filesystem::current_path() / "data" / "level1";
 
@@ -70,8 +70,8 @@ namespace game {
 
   void Level1::resetEntities() {
     using namespace engine;
-    auto windowWidth = raylib::GetScreenWidth();
-    auto windowHeight = raylib::GetScreenHeight();
+    auto windowWidth = ::GetScreenWidth();
+    auto windowHeight = ::GetScreenHeight();
 
     // std::cout << windowWidth << " " << windowHeight << std::endl;
 
@@ -101,11 +101,11 @@ namespace game {
      */
     auto balasText = entMgr.addEntity();
     balasText->addComponent<PositionComponent>(50, windowHeight - 50);
-    balasText->addComponent<TextComponent>("Plomazos", raylib::GREEN, 50);
+    balasText->addComponent<TextComponent>("Plomazos", ::GREEN, 50);
 
     auto balasCounter = entMgr.addEntity();
     balasCounter->addComponent<PositionComponent>(50, windowHeight - 100);
-    balasCounter->addComponent<TextComponent>(std::to_string(maxBullets), raylib::GREEN, 50);
+    balasCounter->addComponent<TextComponent>(std::to_string(maxBullets), ::GREEN, 50);
     bulletsEntity = balasCounter.get();
 
     /*
@@ -114,14 +114,14 @@ namespace game {
     auto scoreText = entMgr.addEntity();
 
     scoreText->addComponent<PositionComponent>(windowWidth * 7 / 10, windowHeight - 50);
-    scoreText->addComponent<TextComponent>("Puntaje: ", raylib::GREEN, 50);
+    scoreText->addComponent<TextComponent>("Puntaje: ", ::GREEN, 50);
 
     std::cout << scoreText->getComponent<PositionComponent>().coord.x << " " << scoreText->getComponent<PositionComponent>().coord.y << std::endl;
 
     auto scoreCounter = entMgr.addEntity();
 
     scoreCounter->addComponent<PositionComponent>(windowWidth * 27 / 30, windowHeight - 50);
-    scoreCounter->addComponent<TextComponent>("0", raylib::GREEN, 50);
+    scoreCounter->addComponent<TextComponent>("0", ::GREEN, 50);
     scoreEntity = scoreCounter.get();
 
     /*
@@ -195,9 +195,9 @@ namespace game {
       paloma->getComponent<SpriteComponent>().addState("muerta", textureAtlas["palomaMuerta"]);
 
       paloma->addComponent<PositionComponent>(
-          raylib::GetRandomValue(
+          ::GetRandomValue(
               windowWidth * 9 / 10, windowWidth),
-          raylib::GetRandomValue(
+          ::GetRandomValue(
               0, windowHeight / 10));
 
       std::cout << paloma->getComponent<PositionComponent>().coord.x << " " << paloma->getComponent<PositionComponent>().coord.y << std::endl;
@@ -274,7 +274,7 @@ namespace game {
   }
 
   void Level1::onRender() {
-    using namespace raylib;
+    
     rlScalef(2.f, 2.f, 1.f);
 
     DrawTexture(background1, 0, 0, WHITE);

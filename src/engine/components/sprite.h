@@ -14,7 +14,7 @@ namespace engine {
     // unsigned atlIdx{};
     float height;
     float width;
-    raylib::Vector2 offset{};
+    ::Vector2 offset{};
 
     std::string currentState;
     // Cada estado tiene un atlas diferente y un index asociado a ese

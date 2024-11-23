@@ -1,3 +1,0 @@
-[submodule "third_party/mice"]
-	path = third_party/mice
-	url = https://github.com/doomed-phobos/mice

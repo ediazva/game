@@ -2,21 +2,23 @@
 
 #include "engine/debug.h"
 #include "engine/timer_manager.h"
-#include "engine/raylib.h"
+
+#include <raylib.h>
+
 namespace engine {
   Engine::Engine(const char* title, unsigned w, unsigned h, int fps) :
     m_currentLevel{} {
-    raylib::InitWindow(w, h, title);
+    ::InitWindow(w, h, title);
     if(fps > 0)
-      raylib::SetTargetFPS(fps);
-    raylib::InitAudioDevice();
+      ::SetTargetFPS(fps);
+    ::InitAudioDevice();
 
     configure_raylib_log();
   }
   Engine::~Engine() {
     m_levels.clear();
-    raylib::CloseAudioDevice();
-    raylib::CloseWindow();
+    ::CloseAudioDevice();
+    ::CloseWindow();
   }
 
   // assets::Tile Engine::makeTileFromPath(const char* path, Result* res) {
@@ -49,9 +51,9 @@ namespace engine {
     onInit();
     // m_sysmgr->init();
 
-    while(!raylib::WindowShouldClose()) {
+    while(!::WindowShouldClose()) {
       processInput();
-      update(raylib::GetFrameTime());
+      update(::GetFrameTime());
       render();
     }
   }
@@ -68,10 +70,10 @@ namespace engine {
   }
 
   void Engine::render() {
-    raylib::BeginDrawing();
+    ::BeginDrawing();
     onRender();
     if(m_currentLevel) m_currentLevel->render();
 
-    raylib::EndDrawing();
+    ::EndDrawing();
   }
 } // namespace engine

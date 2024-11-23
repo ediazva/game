@@ -6,9 +6,9 @@
 #include "engine/systems/animation.h"
 #include "engine/components/animation.h"
 #include "engine/components/sprite.h"
-#include "engine/raylib.h"
+#include <raylib.h>
 
-using namespace raylib;  
+  
 
 namespace game {
   void Level0::onInit() {
@@ -37,7 +37,7 @@ namespace game {
     sysMgr.addSystem(std::make_shared<engine::DrawSystem>());
 
     auto& nubes = entMgr.addEntity();
-    nubes->addComponent<engine::TextComponent>("Adios mundo", raylib::RED, 12);
+    nubes->addComponent<engine::TextComponent>("Adios mundo", ::RED, 12);
     nubes->addComponent<engine::PositionComponent>(0.f, 0.f);
   }
 
@@ -71,7 +71,7 @@ void Level0::initializeEntityManager() {
   }
 
   void Level0::onRender() {
-    using namespace raylib;
+    
     rlScalef(1.f, 1.f, 1.f);
     DrawTexture(inicio, 0, 0, WHITE);
   }

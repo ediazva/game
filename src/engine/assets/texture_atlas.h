@@ -26,11 +26,11 @@ namespace engine::assets {
     const Info& info() const { return m_info; }
     size_t nrects() const { return m_rects.size(); }
 
-    const raylib::Vector2& rectOrigin(unsigned idx) const { return m_rects.at(idx); }
+    const ::Vector2& rectOrigin(unsigned idx) const { return m_rects.at(idx); }
   private:
     Texture m_tex{};
     Info m_info{};
-    std::vector<raylib::Vector2> m_rects;
+    std::vector<::Vector2> m_rects;
 
     void initRects();
     void initInfo(const Info& info);

@@ -8,7 +8,7 @@ namespace game {
   class App : public engine::Engine {
     Level0* m_menu;
     Level1* m_main;
-    raylib::Music music;
+    ::Music music;
   public:
     App();
     ~App();

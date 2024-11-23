@@ -6,7 +6,7 @@
 
 namespace engine {
   void AnimationSystem::update(float deltatime) {
-    using namespace raylib;
+    
     auto entities = entityMgr().getEntities<SpriteComponent, AnimationComponent>();
 
     for(auto& e : entities) {

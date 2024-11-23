@@ -10,11 +10,11 @@ namespace game {
   App::App() : engine::Engine("Django Sin Palomas", 1200, 600, 60) {}
 
   void App::onInit() {
-    raylib::DisableCursor();
+    ::DisableCursor();
     m_main = addLevel<Level1>();
-    music = raylib::LoadMusicStream("data/songs/prision.wav");
+    music = ::LoadMusicStream("data/songs/prision.wav");
 
-    // raylib::InitAudioDevice();
+    // ::InitAudioDevice();
     PlayMusicStream(music);
 
     // m_menu = addLevel<Level0>();
@@ -26,7 +26,7 @@ namespace game {
 
   App::~App() {
     // UnloadMusicStream(music);
-    // raylib::CloseAudioDevice();
+    // ::CloseAudioDevice();
   }
 
   void App::onProcessInput() {

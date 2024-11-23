@@ -8,7 +8,7 @@
 
 namespace engine {
   void DrawSystem::render() {
-    using namespace raylib;
+    
 
     ClearBackground(LIGHTGRAY);
 
@@ -48,6 +48,6 @@ namespace engine {
                text.fontSize, text.color);
     }
 
-    // raylib::DrawTexture()
+    // ::DrawTexture()
   }
 } // namespace engine
