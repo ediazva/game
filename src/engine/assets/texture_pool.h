@@ -1,7 +1,6 @@
 #pragma once
 #include "engine/assets/texture.h"
 #include "engine/assets/texture_atlas.h"
-#include "engine/filesystem.h"
 
 #include <unordered_map>
 
@@ -10,7 +9,7 @@ namespace engine::assets {
   public:
     TexturePool(fs::path&& base);
 
-    void loadFromPath(const char* id, const char* path);
+    bool loadFromPath(const char* id, const char* path);
     void remove(const char* id);
     const Texture& operator[](const char* id) const;
     bool contains(const char* id) const;

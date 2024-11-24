@@ -15,23 +15,19 @@ namespace engine {
     return s_nScenes++;
   }
 
-  int Scene::init() {
-    if(auto res = onInit(); res != 0) return res;
+  int Scene::onInit() {
     m_sysMgr.init();
     return 0;
   }
 
-  void Scene::update(float deltatime) {
-    onUpdate(deltatime);
+  void Scene::onUpdate(float deltatime) {
     m_sysMgr.update(deltatime);
   }
 
-  void Scene::processInput() {
-    onProcessInput();
+  void Scene::onProcessInput() {
   }
 
-  void Scene::render() {
-    onRender();
+  void Scene::onRender() {
     m_sysMgr.render();
   }
 

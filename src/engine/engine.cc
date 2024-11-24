@@ -80,23 +80,23 @@ namespace engine {
     if(res != 0) return res;
 
     for(auto&& scene : m_scenes)
-      if((res = scene->init()) != 0) return res;
+      if((res = scene->onInit()) != 0) return res;
 
     return 0;
   }
 
   void Engine::processInput() {
-    if(m_currentLevel) m_currentLevel->processInput();
+    if(m_currentLevel) m_currentLevel->onProcessInput();
   }
 
   void Engine::update(float deltatime) {
     TimerManager::Tick(deltatime);
-    if(m_currentLevel) m_currentLevel->update(deltatime);
+    if(m_currentLevel) m_currentLevel->onUpdate(deltatime);
   }
 
   void Engine::render() {
     ::BeginDrawing();
-    if(m_currentLevel) m_currentLevel->render();
+    if(m_currentLevel) m_currentLevel->onRender();
     ::EndDrawing();
   }
 } // namespace engine

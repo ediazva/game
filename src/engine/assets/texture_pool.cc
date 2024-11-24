@@ -6,9 +6,9 @@ namespace engine::assets {
   TexturePool::TexturePool(fs::path&& base) :
     m_base{std::move(base)} {}
   
-  void TexturePool::loadFromPath(const char* id, const char* path) {
+  bool TexturePool::loadFromPath(const char* id, const char* path) {
     const auto pair = m_pool.insert({id, Texture::MakeFromPath(m_base/path)});
-    assert(pair.first->second.isValid() && pair.second);
+    return pair.first->second.isValid() && pair.second;
   }
 
   void TexturePool::remove(const char* id) {

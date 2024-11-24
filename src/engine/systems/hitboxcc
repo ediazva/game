@@ -5,7 +5,7 @@
 #include "engine/components/velocity.h"
 #include "engine/debug.h"
 #include "engine/entity_manager.h"
-#include "engine/components/position.h"
+#include "engine/components/transform.h"
 #include "engine/components/hitbox.h"
 #include "raylib.h"
 #include <memory>

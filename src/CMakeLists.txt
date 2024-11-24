@@ -16,8 +16,8 @@ add_library(engine-lib STATIC
   engine/scene.cc
   engine/system_manager.cc
   engine/systems/draw.cc
-  engine/systems/input.cc
-  engine/systems/hitbox.cc
+  # engine/systems/input.cc
+  # engine/systems/hitbox.cc
   engine/systems/animation.cc
   engine/assets/texture_atlas.cc
   engine/assets/texture_pool.cc

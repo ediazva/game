@@ -11,19 +11,16 @@ namespace engine {
     EntityManager m_entMgr;
     SystemManager m_sysMgr;
     SceneID m_id;
-  protected:
-    virtual int onInit() {return 0;}
-    virtual void onUpdate(float deltatime) {}
-    virtual void onProcessInput() {}
-    virtual void onRender() {}
   public:
     Scene();
     virtual ~Scene();
-    int init();
     void destroy();
-    void processInput();
-    void update(float deltatime);
-    void render();
+
+    virtual int onInit();
+    virtual void onUpdate(float deltatime);
+    virtual void onProcessInput();
+    virtual void onRender();
+    
     auto&& entityManager(this auto&& self) {return self.m_entMgr;}
     auto&& systemManager(this auto&& self) {return self.m_sysMgr;}
     SceneID id() const;

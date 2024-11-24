@@ -14,7 +14,7 @@ namespace engine {
   public:
     std::function<void()> onClick = []() {};
 
-    template <component_t T, typename... Args>
+    template <component_t T, typename... Args> requires std::constructible_from<T, Args...>
     T& addComponent(Args&&... args) {
       if(hasComponent<T>()) {
         DEBUG_WARNING("[Entity] double call addComponent with T=%s. Returning existing one", typeid(T).name());
@@ -23,21 +23,6 @@ namespace engine {
 
       DEBUG_TRACE("[Entity] created T=%s", typeid(T).name());
       auto ptr = new T(std::forward<Args>(args)...);
-      m_componentRefList[Component::GetTypeID<T>()] = ptr;
-      m_componentFlags[Component::GetTypeID<T>()] = true;
-      m_components.emplace_back(ptr);
-      return *ptr;
-    }
-
-    template <component_t T>
-    T& addComponent() {
-      if(hasComponent<T>()) {
-        DEBUG_WARNING("[Entity] double call addComponent with T=%s. Returning existing one", typeid(T).name());
-        return getComponent<T>();
-      }
-
-      DEBUG_TRACE("[Entity] created T=%s", typeid(T).name());
-      auto ptr = new T();
       m_componentRefList[Component::GetTypeID<T>()] = ptr;
       m_componentFlags[Component::GetTypeID<T>()] = true;
       m_components.emplace_back(ptr);
