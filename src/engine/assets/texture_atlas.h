@@ -1,38 +1,43 @@
 #pragma once
-#include "engine/assets/texture.h"
-
+#include <raylib.h>
 #include <vector>
 
 namespace engine::assets {
+  class Texture;
+
   class TextureAtlas {
   public:
+    TextureAtlas();
+
     struct Info {
       struct {
         unsigned w;
         unsigned h;
       } size;
+      struct {
+        unsigned r;
+        unsigned b;
+      } padding;
+      struct {
+        unsigned l;
+        unsigned t;
+      } offset;
       float scale{ 1.f };
     };
 
-    TextureAtlas() = default;
-    TextureAtlas(Texture&& tex, const Info& info) {
-      makeFromTexture(std::move(tex), info);
-    }
+    void draw(unsigned idx, const ::Vector2& position) const;
 
-    void makeFromTexture(Texture&& tex, const Info& info);
-    void setScale(float scale);
-
-    const Texture& texture() const { return m_tex; }
-    const Info& info() const { return m_info; }
-    size_t nrects() const { return m_rects.size(); }
-
-    const ::Vector2& rectOrigin(unsigned idx) const { return m_rects.at(idx); }
+    const std::vector<::Vector2>& points() const {return m_points;}
+    const Info& info() const {return m_info;}
   private:
-    Texture m_tex{};
-    Info m_info{};
-    std::vector<::Vector2> m_rects;
+    friend class TexturePool;
 
-    void initRects();
+    void makeFromTexture(const Texture* tex, const Info& info);
     void initInfo(const Info& info);
+    void initPoints();
+
+    std::vector<::Vector2> m_points;
+    Info m_info;
+    const Texture* m_refTexture;
   };
 } // namespace engine::assets

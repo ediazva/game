@@ -12,7 +12,7 @@ namespace engine {
 
     ClearBackground(LIGHTGRAY);
 
-    for(auto& e : entityMgr().getEntities<SpriteComponent, PositionComponent>()) {
+    /*for(auto& e : entityMgr().getEntities<SpriteComponent, PositionComponent>()) {
       auto& sprite = e->getComponent<SpriteComponent>();
       auto& position = e->getComponent<PositionComponent>();
 
@@ -46,7 +46,7 @@ namespace engine {
 
       DrawText(text.str.c_str(), position.coord.x, position.coord.y,
                text.fontSize, text.color);
-    }
+    }*/
 
     // ::DrawTexture()
   }
