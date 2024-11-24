@@ -22,10 +22,9 @@ namespace engine::assets {
         unsigned l;
         unsigned t;
       } offset;
-      float scale{ 1.f };
     };
 
-    void draw(unsigned idx, const ::Vector2& position) const;
+    void draw(unsigned idx, const ::Vector2& position, float scale = 1.f) const;
 
     const std::vector<::Vector2>& points() const {return m_points;}
     const Info& info() const {return m_info;}

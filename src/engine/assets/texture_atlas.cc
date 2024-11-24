@@ -18,7 +18,6 @@ namespace engine::assets {
 
   void TextureAtlas::initInfo(const Info& info) {
     assert(!(info.size.w == 0 || info.size.h == 0));
-    assert(info.scale > 0.f);
     m_info = info;
   }
 
@@ -40,14 +39,14 @@ namespace engine::assets {
     DEBUG_TRACE("[TextureAtlas] #points=%zu", m_points.size());
   }
 
-  void TextureAtlas::draw(unsigned idx, const ::Vector2& position) const {
+  void TextureAtlas::draw(unsigned idx, const ::Vector2& position, float scale) const {
     assert(idx < m_points.size());
 
     DrawTexturePro(
           *m_refTexture,
           { m_points[idx].x, m_points[idx].y, static_cast<float>(m_info.size.w), static_cast<float>(m_info.size.h) },
           { position.x, position.y,
-            m_info.size.w * m_info.scale, m_info.size.h * m_info.scale },
+            m_info.size.w * scale, m_info.size.h * scale },
           {}, 0.f, WHITE);
   }
 } // namespace engine::assets
